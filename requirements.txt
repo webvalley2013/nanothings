@@ -1,0 +1,7 @@
+# psycopg2 '2.5.1 (dt dec pq3 ext)'
+Django==1.5.1
+celery==3.0.21
+django-celery==3.0.17
+jsonfield==0.9.17
+pytz==2013b
+https://github.com/MPBAUnofficial/pyhive/archive/develop.zip
