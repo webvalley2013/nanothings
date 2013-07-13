@@ -14,12 +14,12 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'NAME': 'nanothings',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': '192.168.205.10',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '5432',                      # Set to empty string for default.
     }
 }
 
@@ -122,11 +122,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+
     'djcelery',
+    'process',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -157,3 +158,16 @@ LOGGING = {
         },
     }
 }
+
+CELERY_TRACK_STARTED = True
+## Broker settings.
+BROKER_URL = "amqp://guest:guest@localhost:5672//"
+
+# List of modules to import when celery starts.
+CELERY_IMPORTS = ("process.tasks", )
+
+## Using the database to store task state and results.
+#CELERY_RESULT_BACKEND = "database"
+#CELERY_RESULT_DBURI = "sqlite:///mydatabase.db"
+CELERY_RESULT_BACKEND = "amqp"
+CELERY_TASK_RESULT_EXPIRES = 18000  # 5 hours.
