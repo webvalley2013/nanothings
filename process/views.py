@@ -15,13 +15,11 @@ def process_list(request):
 
 
 def run_process_test(request, n1, n2):
-    #process_type = "process_test"
-
     # Load correct task from celery tasks
     from tasks import add
 
     # Add task to broker code
-    task = add.delay(n1,n2)
+    task = add.delay(n1, n2)
 
     # Save running process to db
     task_id = task.id
@@ -41,6 +39,15 @@ def run_process_test(request, n1, n2):
     response = {
         "success": True,
         "polling_url": "/status"
+    }
+    j = json.dumps(response)
+    return HttpResponse(j, content_type="application/json")
+
+def status(request, pk):
+    st = Process.objects.get(id=pk).runningprocess_set.get().finished
+
+    response = {
+        "status": st
     }
     j = json.dumps(response)
     return HttpResponse(j, content_type="application/json")

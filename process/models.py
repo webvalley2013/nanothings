@@ -2,6 +2,7 @@ from django.db import models
 import jsonfield
 import celery
 from celery.result import BaseAsyncResult
+import djcelery
 
 class Process(models.Model):
     TYPE_CHOICES = (
@@ -31,7 +32,7 @@ class RunningProcess(models.Model):
     # From id returns task result
     @property
     def celery_task(self):
-        return BaseAsyncResult.AsyncResult(self.task_id)
+        return djcelery.celery.AsyncResult(self.task_id)
 
     # Check the status of the task
     @property
