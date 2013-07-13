@@ -1,16 +1,18 @@
+# MODULES
 from .models import Process, RunningProcess
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from django.core.urlresolvers import reverse
 import json
 from pyhive.extra.django import DjangoModelSerializer
 from pyhive.serializers import ListSerializer, GenericObjectSerializer
 import datetime
 
+
 def process_list(request):
     serializer = ListSerializer(item_serializer=DjangoModelSerializer())
     data = serializer.serialize(Process.objects.all())
     j = json.dumps(data)
+    # "polls/index.html"
     return HttpResponse(j, content_type="application/json")
 
 
@@ -33,7 +35,7 @@ def run_process_test(request, n1, n2):
         "n2": n2
     }
 
-    p.save() # Save the running process to the DB
+    p.save()  # Save the running process to the DB
 
     # Return response to the client. TODO: Create correct getstatus url!
     response = {
@@ -43,11 +45,15 @@ def run_process_test(request, n1, n2):
     j = json.dumps(response)
     return HttpResponse(j, content_type="application/json")
 
-def status(request, pk):
-    st = Process.objects.get(id=pk).runningprocess_set.get().finished
 
-    response = {
-        "status": st
-    }
+def status(request, pk):
+    pr = RunningProcess.objects.get(id = pk)
+
+    response = { "status": pr.finished }
+    response["code"] = pr.status  # TMP
+
+    if pr.finished:
+        response["result"] = pr.result
+
     j = json.dumps(response)
     return HttpResponse(j, content_type="application/json")
