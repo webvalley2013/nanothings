@@ -1,7 +1,6 @@
 # MODULES
 from django.db import models
 import jsonfield
-import celery
 import djcelery
 
 
