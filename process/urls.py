@@ -1,4 +1,5 @@
-from django.conf.urls import patterns
+from django.conf.urls import patterns, url
+import process.views
 
 urlpatterns = patterns('process.views',
     (r'list/$', 'process_list'),
@@ -7,4 +8,10 @@ urlpatterns = patterns('process.views',
 #   (r'run/plrfunc/(\d+)/(\d+)/$', 'run_process_test'),
 #   (r'run/hadoop/(\d+)/(\d+)/$', 'run_process_test'),
     (r'status/(\d+)/$', 'status'),
+
+)
+
+urlpatterns = patterns('',
+    url(r'^list/$', views.process_list,  name="process_list"),
+    url(r'^analyse/index.html',     views.index, name="index"),
 )

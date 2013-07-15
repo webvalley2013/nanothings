@@ -7,6 +7,7 @@ from pyhive.extra.django import DjangoModelSerializer
 from pyhive.serializers import ListSerializer, GenericObjectSerializer
 import datetime
 
+
 def process_list(request):
     serializer = ListSerializer(item_serializer=DjangoModelSerializer())
     data = serializer.serialize(Process.objects.all())
@@ -42,6 +43,7 @@ def run_process_test(request, n1, n2):
     }
     j = json.dumps(response)
     return HttpResponse(j, content_type="application/json")
+
 
 def status(request, pk):
     st = Process.objects.get(id=pk).runningprocess_set.get().finished
