@@ -128,6 +128,7 @@ INSTALLED_APPS = (
 
     'djcelery',
     'process',
+    'userinterface',
 )
 
 # A sample logging configuration. The only tangible logging
