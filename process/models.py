@@ -1,7 +1,6 @@
 # MODULES
 from django.db import models
 import jsonfield
-import celery
 import djcelery
 
 
@@ -52,3 +51,7 @@ class RunningProcess(models.Model):
     @property
     def result(self):
         return self.celery_task.get()
+
+    @property
+    def finished_time(self):
+        return djcelery.celery.AsyncResult(self.task_id) # tmp
