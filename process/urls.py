@@ -11,6 +11,8 @@ urlpatterns = patterns('process.views',
 #   (r'run/hadoop/(\d+)/(\d+)/$', 'run_process_test'),
 
 
-    (r'status/(\d+)', 'status'),
+
+    url(r"status/(\d+)", views.status, name="status"),
+    url(r"detail/(\d+)$", views.detail, name="detail"),
 )
 
