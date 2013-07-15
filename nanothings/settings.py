@@ -128,6 +128,7 @@ INSTALLED_APPS = (
 
     'djcelery',
     'process',
+    'userinterface',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -164,13 +165,7 @@ DEFAULT_OUTPUT_PATH = "/tmp"
 
 CELERY_TRACK_STARTED = True
 BROKER_URL = "amqp://guest:guest@localhost:5672//"
-# List of modules to import when celery starts.
 CELERY_IMPORTS = ("process.tasks", )
-# Using the database to store task state and results.
 #CELERY_RESULT_DBURI = "sqlite:///mydatabase.db"
 CELERY_RESULT_BACKEND = "amqp"
 CELERY_TASK_RESULT_EXPIRES = 18000  # 5 hours.
-
-#newpath = r'C:\Program Files\arbitrary'
-#if not os.path.exists(newpath):
-# os.makedirs(newpath)
