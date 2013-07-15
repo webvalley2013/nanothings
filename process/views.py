@@ -9,9 +9,16 @@ import datetime
 import djcelery
 
 
+# Modifier for serialization
+def mod(obj, current, *args, **kwargs):
+    for i in current:
+        del i['date'], i['inputs'], i['outputs']
+    return current
+
+
 def process_list(request):
     serializer = ListSerializer(item_serializer=DjangoModelSerializer())
-    data = serializer.serialize(Process.objects.all())
+    data = serializer.serialize(Process.objects.all(), modifiers=[mod])
     j = json.dumps(data)
     return HttpResponse(j, content_type="application/json")
 
@@ -24,7 +31,6 @@ def run_process_test(request, n1, n2):
     task = add.delay(n1, n2)
 
     # Save running process to db
-    # task_id = task.id
     process_fk = Process.objects.get(process_code="process_test")
     p = RunningProcess()
     p.process_type = process_fk  # (3d, hadoop, R/PLR, ...)
@@ -40,7 +46,7 @@ def run_process_test(request, n1, n2):
     # Return response to the client. TODO: Create correct getstatus url!
     response = {
         "success": True,
-        "polling_url": "/status"
+        "polling_url": "/process/status/" + str(p.pk)
     }
     j = json.dumps(response)
     return HttpResponse(j, content_type="application/json")
@@ -121,10 +127,12 @@ def status(request, pk):
 
     if pr.finished:
         response["result"] = pr.result
+        response["finished_time"] = pr.finished_time
+
+    # Timestamp for finished process
 
     j = json.dumps(response)
     return HttpResponse(j, content_type="application/json")
-
 
 
 def abort(request, task_id):
@@ -149,8 +157,7 @@ def abort(request, task_id):
 
 
 def detail(request, pk):
-    pr = Process.objects.get(id = pk)
-
+    pr = Process.objects.get(id=pk)
 
     serializer = DjangoModelSerializer()
     data = serializer.serialize(pr)
