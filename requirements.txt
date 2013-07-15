@@ -4,4 +4,6 @@ celery==3.0.21
 django-celery==3.0.17
 jsonfield==0.9.17
 pytz==2013b
+django-ajaxutils
+requests
 https://github.com/MPBAUnofficial/pyhive/archive/develop.zip

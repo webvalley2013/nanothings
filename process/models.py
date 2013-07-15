@@ -13,7 +13,7 @@ class Process(models.Model):
     )
 
     # Fields
-    process_code = models.CharField(max_length=40, unique=True)
+    code = models.CharField(max_length=40, unique=True)
     description = models.TextField(blank=True, null=True)
     author = models.CharField(max_length=40)
     date = models.DateTimeField()
@@ -22,7 +22,7 @@ class Process(models.Model):
     outputs = jsonfield.JSONField()
 
     def __unicode__(self):
-        return u'%s' % (self.process_code)
+        return u'%s' % (self.code)
 
 
 class RunningProcess(models.Model):
