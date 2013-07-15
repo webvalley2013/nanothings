@@ -130,3 +130,17 @@ def status(request, pk):
 
     j = json.dumps(response)
     return HttpResponse(j, content_type="application/json")
+
+
+def detail(request, pk):
+    pr = Process.objects.get(id = pk)
+
+
+    serializer = DjangoModelSerializer()
+    data = serializer.serialize(pr)
+    j = json.dumps(data)
+
+    return HttpResponse(j, content_type="application/json")
+
+
+
