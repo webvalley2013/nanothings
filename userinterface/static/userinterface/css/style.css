@@ -33,7 +33,7 @@ body
     line-height: 30px;
 
     background-color: rgb(238, 238, 238);
-    box-shadow: 1px 1px 3px #777;
+    box-shadow: 0.3px 3px 3px #777;
     border-radius: 10px;
 }
 
@@ -51,5 +51,23 @@ body
 
 .carousel slide{
     padding: 50px;
+}
+
+.logo-about {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.footer {
+    margin: 25px 0 0 0;
+    text-align: center;
+    font-size: 12px;
+}
+
+.prop li {
+    margin-bottom: 15px;
 }
 

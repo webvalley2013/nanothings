@@ -14,6 +14,8 @@ from ajaxutils.decorators import ajax
 
 from .models import Process, RunningProcess
 from .formbuilder import FormFactory
+from nanothings.utils import create_dir_name
+from nanothings.settings import DEFAULT_OUTPUT_PATH
 
 # Modifier for serialization
 def mod(obj, current, *args, **kwargs):
@@ -39,7 +41,7 @@ def run_process_test(request, n1, n2):
     task = add.delay(n1, n2)
 
     # Save running process to db
-    process_fk = Process.objects.get(process_code="process_test")
+    process_fk = Process.objects.get(code="process_test")
     p = RunningProcess()
     p.process_type = process_fk  # (3d, hadoop, R/PLR, ...)
     p.task_id = task.id
@@ -72,7 +74,7 @@ def run_process_get(request):
 
     # Save running process to db
 
-    process_fk = Process.objects.get(process_code="process_get")
+    process_fk = Process.objects.get(code="process_get")
     p = RunningProcess()
     p.process_type =  process_fk  # (3d, hadoop, R/PLR, ...)
     p.task_id = task.id
@@ -112,6 +114,34 @@ def run_process_3d(request, p_id):
     form = ProcessForm(request.POST)
     if form.is_valid():
         parameters = form.save()
+        from .tasks import run_3d_analisys
+
+        # Add task to broker code
+        try:
+            outdir = create_dir_name(DEFAULT_OUTPUT_PATH)
+            task = run_3d_analisys.delay(parameters["nucleus1"], parameters["nucleus2"], parameters["litaf1"], parameters["litaf2"], outdir)
+        except Exception as e:
+            return {
+                'success': False,
+                'message': 'Internal server error ' + e.message
+            }, 500
+        else:
+
+            # Save running process to db
+            process_fk = Process.objects.get(code="3dprova")
+            p = RunningProcess()
+            p.process_type = process_fk  # (3d, hadoop, R/PLR, ...)
+            p.task_id = task.id
+            p.started = datetime.datetime.now()
+            p.inputs = json.dumps(parameters)
+            p.save() # Save the running process to the DB
+
+            # Return response to the client.
+            return {
+                'success': True,
+                'polling_url': '/process/status/' + str(p.pk)
+            }
+
     else:
         return {
             'success': False,
@@ -151,20 +181,21 @@ def run_process_post(request):
         "polling_url": "/status"
     }
 
-
+@ajax()
 def status(request, pk):
     pr = RunningProcess.objects.get(id=pk)
 
-    response = { "finished": pr.finished, "status": pr.status }
+    response = {
+        'finished': pr.finished,
+        'status': pr.status
+    }
 
     if pr.finished:
-        response["result"] = pr.result
-        response["finished_time"] = pr.finished_time
+        if pr.status != 'FAILURE':
+            response["result"] = pr.result
+        # response["finished_time"] = pr.finished_time
 
-    # Timestamp for finished process
-
-    j = json.dumps(response)
-    return HttpResponse(j, content_type="application/json")
+    return response
 
 
 # Abort a task given his UUID

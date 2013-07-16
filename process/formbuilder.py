@@ -1,3 +1,4 @@
+# MODULES
 from time import time
 from os.path import join as j
 from django import forms
@@ -5,6 +6,7 @@ from django.core.files.base import ContentFile
 import requests
 from .validators import validate_url_list
 from .storage import tmpfs
+from nanothings.settings import DEFAULT_INPUT_PATH
 
 
 class URLListField(forms.CharField):
@@ -13,6 +15,9 @@ class URLListField(forms.CharField):
         super(URLListField, self).__init__(*args, **kwargs)
 
     def to_python(self, value):
+        if value == None:
+            return None
+
         return value.split("||")
 
 
@@ -54,7 +59,7 @@ class NanoForm(forms.Form):
                 # For those of you who can't interpret python this takes the extension of the file and it's obvious
                 extension = req.headers["content-type"].split(";")[0].split('/')[1].strip()
                 data = ContentFile(req.content)
-                actual_name = tmpfs.save(j(self.DIRNAME, 'name_{0}.{1}'.format(i, extension)), data)
+                actual_name = tmpfs.save(j(DEFAULT_INPUT_PATH, self.DIRNAME, 'file_{0}.{1}'.format(i, extension)), data)
                 paths.append(actual_name)
 
         return paths
