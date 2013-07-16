@@ -1,0 +1,17 @@
+[Unit]
+Description=Celery workers
+Wants=redis.service network.target
+
+[Service]
+Type=simple
+KillMode=control-group
+#RemainAfterExit=yes
+Restart=always
+Environment=DJANGO_SETTINGS_MODULE=nanothings.prod_settings
+Environment=PYTHONPATH=/srv/django/nanothings/
+User=djangouser
+Group=djangouser
+ExecStart=/srv/django/.venv/bin/python /srv/django/nanothings/manage.py celery worker --concurrency=8
+
+[Install]
+WantedBy=multi-user.target

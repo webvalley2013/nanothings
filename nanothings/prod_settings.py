@@ -168,9 +168,10 @@ DEFAULT_OUTPUT_PATH = "/tmp/outputs/"
 DEFAULT_HTTP_OUTPUT = "http://www.blabla.com/"  # e.g: ownCloud
 
 CELERY_TRACK_STARTED = True
-BROKER_URL = "amqp://guest:guest@localhost:5672//"
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_IMPORTS = ("process.tasks", )
 #CELERY_RESULT_DBURI = "sqlite:///mydatabase.db"
-CELERY_RESULT_BACKEND = "amqp"
+#CELERY_RESULT_BACKEND = "amqp"
 CELERY_TASK_RESULT_EXPIRES = 18000  # 5 hours.
 

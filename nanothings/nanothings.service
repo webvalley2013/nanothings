@@ -1,0 +1,15 @@
+[Unit]
+Description=Nanothings service (uWSGI)
+Wants=celery.service network.target nginx.service
+
+[Service]
+Type=notify
+ExecStart=/bin/uwsgi --ini /srv/django/nanothings/nanothings/uwsgi.ini
+Restart=always
+StandardError=syslog
+NotifyAccess=main
+User=djangouser
+Group=djangouser
+
+[Install]
+WantedBy=multi-user.target

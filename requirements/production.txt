@@ -1,1 +1,2 @@
 unipath
+celery-with-redis
