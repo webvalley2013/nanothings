@@ -24,7 +24,6 @@ body
 {
 	margin-top: 100px;
 	padding:10px;
-    border: 0px;
 }
 .main-section
 {
@@ -71,3 +70,8 @@ body
     margin-bottom: 15px;
 }
 
+.thumbnail {
+    border: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
