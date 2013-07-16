@@ -1,5 +1,4 @@
-from django.conf.urls import patterns, url
-from . import views
+from django.conf.urls import patterns
 
 urlpatterns = patterns('userinterface.views',
     (r'process_list/$', "list_of_processes"),
