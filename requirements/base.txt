@@ -11,7 +11,7 @@ https://github.com/MPBAUnofficial/pyhive/archive/develop.zip
 # 3d analisys
 # scipy via sys packages
 # numpy
-# matplotlib
-# mahotas
+matplotlib
+mahotas
 # PIL
 # Install these system wide an symlink here
