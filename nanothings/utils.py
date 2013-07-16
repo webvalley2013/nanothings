@@ -1,6 +1,7 @@
-import datetime
-import time
+from time import time
+from os.path import join as j
 
 
-def create_dir_name():
-    return "dir" + str(time.mktime(datetime.datetime.now().timetuple()))
+def create_dir_name(path):
+    p = j(path, str(int(time()*1000)))
+    return p

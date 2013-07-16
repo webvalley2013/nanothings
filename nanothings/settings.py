@@ -159,8 +159,8 @@ LOGGING = {
     }
 }
 
-DEFAULT_INPUT_PATH = "/tmp"
-DEFAULT_OUTPUT_PATH = "/tmp"
+DEFAULT_INPUT_PATH = "/tmp/nanothings"
+DEFAULT_OUTPUT_PATH = "/tmp/outputs/"
 
 CELERY_TRACK_STARTED = True
 BROKER_URL = "amqp://guest:guest@localhost:5672//"
