@@ -1,6 +1,6 @@
 body
 {
-	background-color: #fcf8e3;
+	background-color: #fff;
     padding-bottom: 50px;
 }
 
@@ -9,8 +9,7 @@ body
 	margin-bottom: 50px;
 	margin-top: 50px;
 }
-.container-fluid{
-}
+
 .form-horiziontal
 {
 	margin-top: 100px;
@@ -22,25 +21,26 @@ body
 	padding:10px;
 }
 
-.row-fluid
+.main-section
 {
-    background-color: #fbb450;
-    border-radius: 50px;
-}
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 30px;
 
-.hero-unit
-{
-    background-color: #999999;
-    padding:10px;
+    background-color: rgb(238, 238, 238);
+    box-shadow: 1px 1px 3px #777;
+    border-radius: 10px;
 }
 
 .signin-menu{
-    padding: 100px;
-
+    padding: 50px;
 }
 
 .caption{
    text-align: center;
 }
 
+.content {
+    padding: 50px;
+}
 
