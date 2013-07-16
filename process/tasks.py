@@ -1,5 +1,7 @@
+# MODULES
 from celery import task
 from .extralib.imageanalisys import main2d
+from nanothings.settings import DEFAULT_HTTP_OUTPUT
 
 
 @task()
@@ -24,9 +26,9 @@ def minus(x, y):
 
 
 @task()
-def run_3d_analisys(n1,n2,l1,l2,outpath):
-    main2d.main(n1,n2,l1,l2,outpath)
-    return outpath
+def run_3d_analisys(n1, n2, l1, l2, outpath):
+    main2d.main(n1, n2, l1, l2, outpath)
+    return DEFAULT_HTTP_OUTPUT + outpath
 
 
 
