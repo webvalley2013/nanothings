@@ -1,13 +1,19 @@
+# MODULES
 from django.views.decorators.csrf import csrf_exempt
 from .models import Process, RunningProcess
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 import json
+import datetime
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse, HttpResponseBadRequest
+import djcelery
 from pyhive.extra.django import DjangoModelSerializer
 from pyhive.serializers import ListSerializer, GenericObjectSerializer
-import datetime
-import djcelery
+from ajaxutils.decorators import ajax
 
+from .models import Process, RunningProcess
+from .formbuilder import FormFactory
 
 # Modifier for serialization
 def mod(obj, current, *args, **kwargs):
@@ -16,13 +22,15 @@ def mod(obj, current, *args, **kwargs):
     return current
 
 
+# Return a JSON with all the processes
+@ajax()
 def process_list(request):
     serializer = ListSerializer(item_serializer=DjangoModelSerializer())
     data = serializer.serialize(Process.objects.all(), modifiers=[mod])
-    j = json.dumps(data)
-    return HttpResponse(j, content_type="application/json")
+    return data
 
 
+@ajax()
 def run_process_test(request, n1, n2):
     # Load correct task from celery tasks
     from tasks import add
@@ -48,9 +56,8 @@ def run_process_test(request, n1, n2):
         "success": True,
         "polling_url": "/process/status/" + str(p.pk)
     }
-    j = json.dumps(response)
-    return HttpResponse(j, content_type="application/json")
 
+    return response
 
 def run_process_get(request):
 
@@ -86,9 +93,35 @@ def run_process_get(request):
     return HttpResponse(j, content_type="application/json")
 
 
+@ajax(require_POST=True)
+@csrf_exempt
+def run_process_3d(request, p_id):
+    try:
+        proc = Process.objects.get(pk=p_id)
+    except Process.DoesNotExist:
+        return {'success': False,
+                'message': 'process with id {0} does not exists'.format(p_id)}, 400
+
+    if proc.type != '3d':
+        return {'success': False,
+                'message': 'process with id {0} is not a 3d analisys'.format(p_id)}, 400
+
+
+    # If the parameters are correct:
+    ProcessForm = FormFactory(proc).build_form()
+    form = ProcessForm(request.POST)
+    if form.is_valid():
+        parameters = form.save()
+    else:
+        return {
+            'success': False,
+            'message': 'input parameters were invalid'
+        }, 400
+
+
+
 @csrf_exempt
 def run_process_post(request):
-
     n1 = request.POST["n1"]
     n2 = request.POST["n2"]
 
@@ -122,8 +155,7 @@ def run_process_post(request):
 def status(request, pk):
     pr = RunningProcess.objects.get(id=pk)
 
-    response = { "finished": pr.finished }
-    response["status"] = pr.status
+    response = { "finished": pr.finished, "status": pr.status }
 
     if pr.finished:
         response["result"] = pr.result
@@ -135,6 +167,7 @@ def status(request, pk):
     return HttpResponse(j, content_type="application/json")
 
 
+# Abort a task given his UUID
 def abort(request, task_id):
     try:
         pr = RunningProcess.objects.get(id=task_id)
@@ -156,6 +189,7 @@ def abort(request, task_id):
     return HttpResponse(j, content_type="application/json")
 
 
+# Returns a JSON with the properties of the given id of the task
 def detail(request, pk):
     pr = Process.objects.get(id=pk)
 

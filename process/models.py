@@ -13,7 +13,7 @@ class Process(models.Model):
     )
 
     # Fields
-    process_code = models.CharField(max_length=40, unique=True)
+    code = models.CharField(max_length=40, unique=True)
     description = models.TextField(blank=True, null=True)
     author = models.CharField(max_length=40)
     date = models.DateTimeField()
@@ -22,7 +22,7 @@ class Process(models.Model):
     outputs = jsonfield.JSONField()
 
     def __unicode__(self):
-        return u'%s' % (self.process_code)
+        return u'%s' % (self.code)
 
 
 class RunningProcess(models.Model):
@@ -38,11 +38,12 @@ class RunningProcess(models.Model):
     def celery_task(self):
         return djcelery.celery.AsyncResult(self.task_id)
 
-    # Check the status of the task
+    # Check if the task has finished
     @property
     def finished(self):
         return self.celery_task.ready()
 
+    # Return the current status of the task
     @property
     def status(self):
         return self.celery_task.status
@@ -52,6 +53,7 @@ class RunningProcess(models.Model):
     def result(self):
         return self.celery_task.get()
 
+    # Returns the time when the task has finished
     @property
     def finished_time(self):
-        return djcelery.celery.AsyncResult(self.task_id) # tmp
+        return 0 # tmp

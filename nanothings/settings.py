@@ -1,4 +1,3 @@
-# Django settings for nanothings project.
 import djcelery
 djcelery.setup_loader()
 
@@ -14,7 +13,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'nanothings',       # Or path to database file if using sqlite3.
+        'NAME': 'wvtestmi',       # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'postgres',
         'PASSWORD': 'postgres',
@@ -169,3 +168,4 @@ CELERY_IMPORTS = ("process.tasks", )
 #CELERY_RESULT_DBURI = "sqlite:///mydatabase.db"
 CELERY_RESULT_BACKEND = "amqp"
 CELERY_TASK_RESULT_EXPIRES = 18000  # 5 hours.
+

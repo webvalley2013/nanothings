@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>NanoWebGIS 3D</title>
+	<title>NanoWebGIS 3D - About</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
@@ -60,16 +60,16 @@
 		<!-- INTRO SECTION -->
 		<div class="row-fluid">
 			<div class="span9">
-                <h1 id="title">List of processes</h1>
-			    {% if pList %}
-			        <ul class="nav nav-tabs nav-stacked">
-				        {% for i in pList %}
-					        <li><a href="/ui/process/{{ i.id }}/">{{i.process_type}} {{ i.id }}</a></li>
-				        {% endfor %}
-			        </ul>
-			    {% else %}
-				    <p>No processes are available.</p>
-			    {% endif %}
+				<div class="hero-unit">
+					<h2>
+						Image Analysis
+					</h2>
+					<p>
+						This is a template for a simple marketing or informational website.
+						It includes a large callout called the hero unit and three supporting
+						pieces of content. Use it as a starting point to create something more unique.
+					</p>
+				</div>
 			</div>
 
 			<!-- SIDEBAR -->
@@ -80,7 +80,7 @@
 					Donec id elit non mi porta gravida at eget metus.
 				</p>
 				<ul class="nav nav-list">
-					<li class="nav-header">External links</li>
+					<li class="nav-header">External Links</li>
 					<li><a href="#">Library</a></li>
 					<li><a href="#">Library</a></li>
 					<li><a href="#">Library</a></li>
