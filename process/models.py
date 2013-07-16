@@ -56,4 +56,4 @@ class RunningProcess(models.Model):
     # Returns the time when the task has finished
     @property
     def finished_time(self):
-        return 0 # tmp
+        return 0  # tmp
