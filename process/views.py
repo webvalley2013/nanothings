@@ -11,11 +11,13 @@ import djcelery
 from pyhive.extra.django import DjangoModelSerializer
 from pyhive.serializers import ListSerializer, GenericObjectSerializer
 from ajaxutils.decorators import ajax
+from django.contrib.auth.decorators import login_required
 
 from .models import Process, RunningProcess
 from .formbuilder import FormFactory
 from nanothings.utils import create_dir_name
 from nanothings.settings import DEFAULT_OUTPUT_PATH
+
 
 # Modifier for serialization
 def mod(obj, current, *args, **kwargs):
@@ -26,6 +28,7 @@ def mod(obj, current, *args, **kwargs):
 
 # Return a JSON with all the processes
 @ajax()
+@login_required
 def process_list(request):
     serializer = ListSerializer(item_serializer=DjangoModelSerializer())
     data = serializer.serialize(Process.objects.all(), modifiers=[mod])
@@ -33,6 +36,7 @@ def process_list(request):
 
 
 @ajax()
+@login_required
 def run_process_test(request, n1, n2):
     # Load correct task from celery tasks
     from tasks import add
@@ -61,6 +65,7 @@ def run_process_test(request, n1, n2):
 
     return response
 
+@login_required
 def run_process_get(request):
 
     n1 = request.GET["n1"]
@@ -97,6 +102,7 @@ def run_process_get(request):
 
 @ajax(require_POST=True)
 @csrf_exempt
+@login_required
 def run_process_3d(request, p_id):
     try:
         proc = Process.objects.get(pk=p_id)
@@ -149,8 +155,8 @@ def run_process_3d(request, p_id):
         }, 400
 
 
-
 @csrf_exempt
+@login_required
 def run_process_post(request):
     n1 = request.POST["n1"]
     n2 = request.POST["n2"]
@@ -182,6 +188,7 @@ def run_process_post(request):
     }
 
 @ajax()
+@login_required
 def status(request, pk):
     pr = RunningProcess.objects.get(id=pk)
 
@@ -199,6 +206,7 @@ def status(request, pk):
 
 
 # Abort a task given his UUID
+@login_required
 def abort(request, task_id):
     try:
         pr = RunningProcess.objects.get(id=task_id)
@@ -221,6 +229,7 @@ def abort(request, task_id):
 
 
 # Returns a JSON with the properties of the given id of the task
+@login_required
 def detail(request, pk):
     pr = Process.objects.get(id=pk)
 
