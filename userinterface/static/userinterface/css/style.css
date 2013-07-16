@@ -28,7 +28,7 @@ body
     line-height: 30px;
 
     background-color: rgb(238, 238, 238);
-    box-shadow: 1px 1px 3px #777;
+    box-shadow: 0.3px 3px 3px #777;
     border-radius: 10px;
 }
 
