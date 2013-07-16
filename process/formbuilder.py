@@ -1,3 +1,4 @@
+# MODULES
 from time import time
 from os.path import join as j
 from django import forms
@@ -7,13 +8,14 @@ from .validators import validate_url_list
 from .storage import tmpfs
 from nanothings.settings import DEFAULT_INPUT_PATH
 
+
 class URLListField(forms.CharField):
     def __init__(self, *args, **kwargs):
         kwargs['validators'] = [validate_url_list]
         super(URLListField, self).__init__(*args, **kwargs)
 
     def to_python(self, value):
-        if (value == None):
+        if value == None:
             return None
 
         return value.split("||")
