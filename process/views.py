@@ -1,3 +1,4 @@
+# MODULES
 from django.views.decorators.csrf import csrf_exempt
 from .models import Process, RunningProcess
 from django.http import HttpResponse
@@ -16,6 +17,7 @@ def mod(obj, current, *args, **kwargs):
     return current
 
 
+# Return a JSON with all the processes
 def process_list(request):
     serializer = ListSerializer(item_serializer=DjangoModelSerializer())
     data = serializer.serialize(Process.objects.all(), modifiers=[mod])
@@ -122,8 +124,7 @@ def run_process_post(request):
 def status(request, pk):
     pr = RunningProcess.objects.get(id=pk)
 
-    response = { "finished": pr.finished }
-    response["status"] = pr.status
+    response = { "finished": pr.finished, "status": pr.status }
 
     if pr.finished:
         response["result"] = pr.result
@@ -135,6 +136,7 @@ def status(request, pk):
     return HttpResponse(j, content_type="application/json")
 
 
+# Abort a task given his UUID
 def abort(request, task_id):
     try:
         pr = RunningProcess.objects.get(id=task_id)
@@ -156,6 +158,7 @@ def abort(request, task_id):
     return HttpResponse(j, content_type="application/json")
 
 
+# Returns a JSON with the properties of the given id of the task
 def detail(request, pk):
     pr = Process.objects.get(id=pk)
 

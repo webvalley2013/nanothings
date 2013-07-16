@@ -1,10 +1,14 @@
 from django.conf.urls import patterns, url
 from . import views
 
-urlpatterns = patterns('',
-    url(r'process_list/$', views.list_of_processes, name="list_of_processes"),
-    url(r'process/(\d+)/$', views.detail, name="detail"),
-    #url(r'abort/process/(\d+)/$', views.abort, name="abort"),
-    url(r'process/abort/(\d+)/$', views.abort, name="abort"),
-    url(r'^$',  views.home, name="index"),
+urlpatterns = patterns('userinterface.views',
+    (r'process_list/$', "list_of_processes"),
+    (r'process/(\d+)/$', 'detail'),
+    (r'process/abort/(\d+)/$', 'abort'),
+    (r'^$', 'home'),
+    (r'^about/$', 'about'),
+    (r'^contacts/$', 'contacts'),
+    (r'^img_analysis/$', 'img_analysis'),
+    (r'^r_plr/$', 'r_plr'),
+    (r'^networks/$', 'networks'),
 )
