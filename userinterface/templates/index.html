@@ -52,52 +52,63 @@
                                 <li><a href="/ui/networks/">Networks</a></li>
                             </ul>
                         </li>
+                        {% if user.is_superuser %}
+                            <li><a href="#">Process Management</a></li>
+                        {% endif %}
                     </ul>
 
                     <ul class="nav pull-right">
+                        {% if user.is_authenticated %}
+                            <li><a href="#">Welcome, {{ user.username }}.</a></li>
+                            <li><a href="/accounts/logout/">Log out</a></li>
+                        {% endif %}
                         <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><em>Have an
-                                account? </em><strong>Sign in</strong> <b class="caret"></b></a>
+                            {% if not user.is_authenticated %}
+
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><em>Have an
+                                    account? </em><strong>Sign in</strong> <b class="caret"></b></a>
+                            {% endif %}
 
                             <div class="dropdown-menu">
 
                                 <div class="menu-dropdown signin-menu">
                                     <fieldset class="signin">
-                                        <form method="post" action="/account/login/?next=/">
-                                            <div style="display:none"><input type="hidden"
-                                                                             name="csrfmiddlewaretoken"
-                                                                             value="6795222e945cd144678d31720ac374f2">
-                                            </div>
-                                            <p>
-                                                <label for="username">Email</label>
-                                                <input id="username" name="username" value="" tabindex="1"
-                                                       type="text">
-                                            </p>
+                                        <form method="post" action="/accounts/login/">
+                                            {% csrf_token %}
+                                            {#<div style="display:none">#}
+                                            {#</div>#}
+                                            {% if not user.is_authenticated %}
+                                                <p>
+                                                    <label for="username">Email</label>
+                                                    <input id="username" name="username" value="" tabindex="1"
+                                                           type="text">
+                                                </p>
 
-                                            <p>
-                                                <label for="password">Password</label>
-                                                <input id="password" name="password" value="" title="password"
-                                                       tabindex="2" type="password">
-                                            </p>
+                                                <p>
+                                                    <label for="password">Password</label>
+                                                    <input id="password" name="password" value="" title="password"
+                                                           tabindex="2" type="password">
+                                                </p>
 
-                                            <p class="remember-checkbox">Remember me <input type="checkbox"
-                                                                                            id="remember_me"
-                                                                                            value="remember_me"
-                                                                                            name="remember_me"
-                                                                                            tabindex="3"></p>
+                                                <p class="remember-checkbox">Remember me <input type="checkbox"
+                                                                                                id="remember_me"
+                                                                                                value="remember_me"
+                                                                                                name="remember_me"
+                                                                                                tabindex="3"></p>
 
-                                            <p class="forgot"><a href="mailto:webvalley@fbk.eu"
-                                                                 id="resend-password-link" tabindex="5">Forgot
-                                                your
-                                                password?</a></p>
+                                                <p class="forgot"><a href="mailto:webvalley@fbk.eu"
+                                                                     id="resend-password-link" tabindex="5">Forgot
+                                                    your
+                                                    password?</a></p>
 
-                                            <div class="divider"></div>
-                                            <p class="signin-button"><input value="Sign in" tabindex="4"
-                                                                            type="submit"
-                                                                            class="btn btn-primary btn-large">
-                                            </p>
+                                                <div class="divider"></div>
+                                                <p class="signin-button"><input value="Sign in" tabindex="4"
+                                                                                type="submit"
+                                                                                class="btn btn-primary btn-large">
+                                                </p>
 
-                                            <p class="forgot"><a href="/account/signup/">Sign up!</a></p>
+                                                <p class="forgot"><a href="/account/signup/">Sign up!</a></p>
+                                            {% endif %}
                                         </form>
                                     </fieldset>
                                 </div>
@@ -149,7 +160,7 @@
                             <a class="carousel-control right" href="#myCarousel" data-slide="next">›</a>
                             <script>
                                 $('.carousel').carousel({
-                                    interval: 500
+                                    interval: 3000
                                 })
                             </script>
                         </div>
