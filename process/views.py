@@ -1,9 +1,12 @@
+# MODULES
+from django.views.decorators.csrf import csrf_exempt
+from .models import Process, RunningProcess
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
 import json
 import datetime
-
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponseBadRequest
-
 import djcelery
 from pyhive.extra.django import DjangoModelSerializer
 from pyhive.serializers import ListSerializer, GenericObjectSerializer
@@ -20,11 +23,14 @@ def mod(obj, current, *args, **kwargs):
         del i['date'], i['inputs'], i['outputs']
     return current
 
+
+# Return a JSON with all the processes
 @ajax()
 def process_list(request):
     serializer = ListSerializer(item_serializer=DjangoModelSerializer())
     data = serializer.serialize(Process.objects.all(), modifiers=[mod])
     return data
+
 
 @ajax()
 def run_process_test(request, n1, n2):
@@ -88,6 +94,7 @@ def run_process_get(request):
     j = json.dumps(response)
     return HttpResponse(j, content_type="application/json")
 
+
 @ajax(require_POST=True)
 @csrf_exempt
 def run_process_3d(request, p_id):
@@ -102,6 +109,7 @@ def run_process_3d(request, p_id):
                 'message': 'process with id {0} is not a 3d analisys'.format(p_id)}, 400
 
 
+    # If the parameters are correct:
     ProcessForm = FormFactory(proc).build_form()
     form = ProcessForm(request.POST)
     if form.is_valid():
@@ -190,6 +198,7 @@ def status(request, pk):
     return response
 
 
+# Abort a task given his UUID
 def abort(request, task_id):
     try:
         pr = RunningProcess.objects.get(id=task_id)
@@ -211,6 +220,7 @@ def abort(request, task_id):
     return HttpResponse(j, content_type="application/json")
 
 
+# Returns a JSON with the properties of the given id of the task
 def detail(request, pk):
     pr = Process.objects.get(id=pk)
 

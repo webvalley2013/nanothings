@@ -1,6 +1,6 @@
 body
 {
-	background-color: #fcfcfc;
+	background-color: #fff;
     padding-bottom: 50px;
 }
 
@@ -9,8 +9,7 @@ body
 	margin-bottom: 50px;
 	margin-top: 50px;
 }
-.container-fluid{
-}
+
 .form-horiziontal
 {
 	margin-top: 100px;
@@ -22,19 +21,44 @@ body
 	padding:10px;
 }
 
-.row-fluid
+.main-section
 {
-    background-color: #fbb450;
-    border-radius: 20px;
-}
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 30px;
 
-.hero-unit
-{
-    background-color: #fbb450;
+    background-color: rgb(238, 238, 238);
+    box-shadow: 0.3px 3px 3px #777;
+    border-radius: 10px;
 }
 
 .signin-menu{
-    padding: 10px;
+    padding: 50px;
 }
 
+.caption{
+   text-align: center;
+}
+
+.content {
+    padding: 50px;
+}
+
+.logo-about {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.footer {
+    margin: 25px 0 0 0;
+    text-align: center;
+    font-size: 12px;
+}
+
+.prop li {
+    margin-bottom: 15px;
+}
 

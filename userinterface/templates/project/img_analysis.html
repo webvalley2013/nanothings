@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% load staticfiles %}
+{% load url from future %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>NanoWebGIS 3D - About</title>
+</head>
+
+<body>
+{% block intro-section-content %}
+    <h2>
+        Image Analysis
+    </h2>
+    <p>
+        This is a template for a simple marketing or informational website.
+        It includes a large callout called the hero unit and three supporting
+        pieces of content. Use it as a starting point to create something more unique.
+    </p>
+
+    {% block thumbnails %}{% endblock %}
+{% endblock %}
+</body>
+</html>

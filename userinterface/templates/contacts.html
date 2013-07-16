@@ -1,9 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends "index.html" %}
+{% load staticfiles %}
+{% load url from future %}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>NanoWebGIS 3D - Contacts</title>
+</head>
+
+<body>
+{% block intro-section-content %}
+    <h2>
+        Contacts
+    </h2>
+    <h4>Fondazione Bruno Kessler</h4>
+    <p>
+        Via Sommarive, 18<br/>
+        Povo (Trento) Italy 38123<br/>
+        mobile:<br/>
+        +39 366 7554977<br/>
+        mail:<br/>
+        webvalley at fbk.eu<br/>
+    </p>
+
+    {% block thumbnails %}{% endblock %}
+{% endblock %}
 </body>
 </html>

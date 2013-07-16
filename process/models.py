@@ -38,11 +38,12 @@ class RunningProcess(models.Model):
     def celery_task(self):
         return djcelery.celery.AsyncResult(self.task_id)
 
-    # Check the status of the task
+    # Check if the task has finished
     @property
     def finished(self):
         return self.celery_task.ready()
 
+    # Return the current status of the task
     @property
     def status(self):
         return self.celery_task.status
@@ -52,6 +53,7 @@ class RunningProcess(models.Model):
     def result(self):
         return self.celery_task.get()
 
+    # Returns the time when the task has finished
     @property
     def finished_time(self):
-        return djcelery.celery.AsyncResult(self.task_id) # tmp
+        return 0  # tmp
