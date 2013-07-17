@@ -1,3 +1,17 @@
+{#This file is part of nanothings.#}
+{##}
+{#    nanothings is free software: you can redistribute it and/or modify#}
+{#    it under the terms of the GNU Affero GPL as published by#}
+{#    the Free Software Foundation, either version 3 of the License, or#}
+{#    (at your option) any later version.#}
+{##}
+{#    Foobar is distributed in the hope that it will be useful,#}
+{#    but WITHOUT ANY WARRANTY; without even the implied warranty of#}
+{#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the#}
+{#    GNU Affero GPL for more details.#}
+{##}
+{#    You should have received a copy of the GNU Affero GPL#}
+{#    along with nanothings.  If not, see <http://www.gnu.org/licenses/>.#}
 {% extends "index.html" %}
 {% load staticfiles %}
 {% load url from future %}
@@ -9,11 +23,21 @@
 </head>
 
 <body>
+
+{% block extra-scripts %}
+    <script>
+        $("li.active").removeClass("active");
+        $("li#projects").addClass("active");
+    </script>
+{% endblock %}
+
+
+
 {% block intro-section-content %}
-    <h2>
+    <h2 id= titleR>
         R / PLR
     </h2>
-    <p>
+    <p id= txtR>
         This is a template for a simple marketing or informational website.
         It includes a large callout called the hero unit and three supporting
         pieces of content. Use it as a starting point to create something more unique.

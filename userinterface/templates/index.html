@@ -1,3 +1,17 @@
+{#This file is part of nanothings.#}
+{##}
+{#    nanothings is free software: you can redistribute it and/or modify#}
+{#    it under the terms of the GNU Affero GPL as published by#}
+{#    the Free Software Foundation, either version 3 of the License, or#}
+{#    (at your option) any later version.#}
+{##}
+{#    Foobar is distributed in the hope that it will be useful,#}
+{#    but WITHOUT ANY WARRANTY; without even the implied warranty of#}
+{#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the#}
+{#    GNU Affero GPL for more details.#}
+{##}
+{#    You should have received a copy of the GNU Affero GPL#}
+{#    along with nanothings.  If not, see <http://www.gnu.org/licenses/>.#}
 {% load staticfiles %}
 <!DOCTYPE html>
 
@@ -41,14 +55,14 @@
                     <ul class="nav">
                         <li class="active"><a href="/ui/">Home</a></li>
                         <li id="about"><a href="/ui/about/">About</a></li>
-                        <li><a href="/ui/contacts/">Contacts</a></li>
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Project<strong
+                        <li id="contacts"><a href="/ui/contacts/">Contacts</a></li>
+                        <li class="dropdown" id=projects>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Projects<strong
                                     class="caret"></strong></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/ui/img_analysis/">Image analysis</a></li>
-                                <li><a href="/ui/r_plr/">R / PLR</a></li>
-                                <li><a href="/ui/networks/">Networks</a></li>
+                                <li id=img_analysis><a href="/ui/img_analysis/">Image analysis</a></li>
+                                <li id=r_plr><a href="/ui/r_plr/">R/PLR</a></li>
+                                <li id=networks><a href="/ui/networks/">Networks</a></li>
                             </ul>
                         </li>
                         <li><a href="/ui/api_documentation">API documentation</a></li>
@@ -145,10 +159,10 @@
                                             medicine data.
                                         </p>
                                     </div>
-                                    <img src="{% static "userinterface/img/bg/00.jpg" %}" alt=""/>
+                                    <img src="{% static "userinterface/img/bg/01.jpg" %}" alt=""/>
                                 </div>
 
-                                <div class="item" id="agility">
+                                <div class="item">
                                     <div class="carousel-caption">
                                         <h1>3D NanoWebGIS</h1>
 
@@ -157,10 +171,10 @@
                                             medicine data.
                                         </p>
                                     </div>
-                                    <img src="{% static "userinterface/img/bg/01.jpg" %}" alt="">
+                                    <img src="{% static "userinterface/img/bg/02.jpg" %}" alt="">
                                 </div>
 
-                                <div class="item" id="fdsegfffffffffffffffff">
+                                <div class="item">
                                     <div class="carousel-caption">
                                         <h1>3D NanoWebGIS</h1>
 
@@ -170,6 +184,41 @@
                                         </p>
                                     </div>
                                     <img src="{% static "userinterface/img/bg/03.jpg" %}" alt="">
+                                </div>
+
+                                <div class="item">
+                                    <div class="carousel-caption">
+                                        <h1>
+                                            3D NanoWebGIS</h1>
+
+                                        <p> 3D nanoWebGIS interface and complex networks for molecular
+                                            medicine data.</p>
+                                    </div>
+                                    <img src="{% static "userinterface/img/bg/04.jpg" %}" alt="">
+                                </div>
+
+
+                                <div class="item">
+                                    <div class="carousel-caption">
+                                        <h1>
+                                            3D NanoWebGIS</h1>
+
+                                        <p> 3D nanoWebGIS interface and complex networks for molecular
+                                            medicine data.</p>
+                                    </div>
+                                    <img src="{% static "userinterface/img/bg/05.jpg" %}" alt="">
+                                </div>
+
+
+                                <div class="item">
+                                    <div class="carousel-caption">
+                                        <h1>
+                                            3D NanoWebGIS</h1>
+
+                                        <p> 3D nanoWebGIS interface and complex networks for molecular
+                                            medicine data.</p>
+                                    </div>
+                                    <img src="{% static "userinterface/img/bg/06.jpg" %}" alt="">
                                 </div>
                             </div>
                             <a class="carousel-control left" href="#myCarousel" data-slide="prev">‹</a>
@@ -194,7 +243,7 @@
                                     <!--  <img alt="300x200" src="http://lorempixel.com/600/200/city">-->
                                     <img class="img-circle" data-src="holder.js/140x140" alt=""
                                          style="width: 140px; height: 140px;"
-                                         src="{% static "userinterface/img/bg/03.jpg" %}">
+                                         src="{% static "userinterface/img/bg/05.jpg" %}">
 
                                     <div class="caption">
 
@@ -215,7 +264,7 @@
 
                                     <img class="img-circle" data-src="holder.js/140x140" alt=""
                                          style="width: 140px; height: 140px;"
-                                         src="{% static "userinterface/img/bg/00.jpg" %}">
+                                         src="{% static "userinterface/img/bg/03.jpg" %}">
 
                                     <div class="caption">
                                         <h3>
