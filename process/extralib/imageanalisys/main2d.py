@@ -1,4 +1,18 @@
-# import numpy as np
+# This file is part of nanothings.
+#
+#     nanothings is free software: you can redistribute it and/or modify
+#     it under the terms of the GNU Affero GPL as published by
+#     the Free Software Foundation, either version 3 of the License, or
+#     (at your option) any later version.
+#
+#     nanothings is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU Affero GPL for more details.
+#
+#     You should have received a copy of the GNU Affero GPL
+#     along with nanothings.  If not, see <http://www.gnu.org/licenses/>.
+
 # import scipy.stats
 # import matplotlib.pyplot as plt
 import matplotlib.cm as cm
@@ -8,144 +22,37 @@ from . import loader
 from . import processing
 from . import output
 
-
-
 cmap = cm.Greys_r
 
 
-def main(n1, n2, l1, l2, outpath):
-    # create correct input (list/list)
-    nucleus1 = []
-    nucleus2 = []
+def test1(conditions, out_folder, conditions_labels=None, mask_label='mask', molecule_label='molecule'):
+    if not exists(out_folder):
+        mkdir(out_folder)
 
-    for i, val in enumerate(n1):
-        nucleus1.append([val,l1[i]])
+    # conditions_labels = ['NT', '2hLPS500']
 
-    for i, val in enumerate(n2):
-        nucleus2.append([val,l2[i]])
+    data = processing.compare_molecule_distribution(conditions,
+        nucleus_index = 0, molecule_index = 1, nucleus_channel = 1, molecule_channel = 0,
+        nucleus_fill_holes = True, nucleus_otsu = True, molecule_fill_holes = False, molecule_otsu = False)
 
-    condition1 = processing.get_molecule_distribution(nucleus1)
-    condition2 = processing.get_molecule_distribution(nucleus2)
-    
-    labels_1 = ['NT 01', 'NT 02', 'NT 03', 'NT 04']
-    labels_2 = ['LPS500 01', 'LPS500 02', 'LPS500 03', 'LPS500 04']
-    
-    nuclei_intensity_c1 = []
-    for i in condition1['slices_intensity']:
-        nuclei_intensity_c1.append(i[0])
-    
-    nuclei_intensity_c2 = []
-    for i in condition2['slices_intensity']:
-        nuclei_intensity_c2.append(i[0])
-    
-    extranuclei_intensity_c1 = []
-    for i in condition1['slices_intensity']:
-        extranuclei_intensity_c1.append(i[2])
-    
-    extranuclei_intensity_c2 = []
-    for i in condition2['slices_intensity']:
-        extranuclei_intensity_c2.append(i[2])
-    
-    nuclei_intensity = nuclei_intensity_c1 +  nuclei_intensity_c2
+# INTER CONDITION - masks - histo + boxplot - merged slices
+    temp = output.select_arrays(data, merged = True, what = [0])
+    labels = conditions_labels
+    output.boxplot(temp, labels = labels, outfile = j(out_folder, 'mask_merged_boxplot.png'))
+    output.histogram(temp, log=True, labels = labels, histtype='step', bins=128, color = None, outfile = j(out_folder, 'mask_merged_histogram.png'))
 
-    if not exists(outpath):
-        mkdir(outpath)
+# SINGLE CONDITION - mask vs all - histo + boxplot - single slices
+    for i in range(0, len(data)):
+        temp = output.select_arrays([data[i]], merged = False, what=[0,1])
+        labels = [conditions_labels[i] + '_nuclei' , conditions_labels[i] + '_all']
+        output.histogram(temp, log=True, labels = labels, histtype='step', bins=128, color = ['green', 'red']*(len(temp)/2), outfile = j(out_folder, conditions_labels[i] + '_histogram.png'))
+        output.boxplot(temp, labels=labels, outfile = j(out_folder, conditions_labels[i] + '_boxplot.png'))
 
-    output.boxplot(nuclei_intensity, outfile=j(outpath,'prova.png'))
+# SINGLE CONDITION - mask vs all - histo + boxplot - merged slices
+    for i in range(0, len(data)):
+        temp = output.select_arrays([data[i]], merged = True, what = [0,1])
+        labels = [ conditions_labels[i] + '_nuclei' , conditions_labels[i] + '_all']
+        output.histogram(temp, log=True, labels = labels, histtype='step', bins=128, color = ['green', 'red']*(len(temp)/2), outfile = j(out_folder, conditions_labels[i] + '_merged_histogram.png'))
+        output.boxplot(temp, labels = labels, outfile = j(out_folder, conditions_labels[i] + '_merged_boxplot.png'))
 
-if __name__ == "__main__":
-    main()
-
-# plt.hist(merged_intensity[0], bins=255, color='r', alpha=0.5)
-# plt.hist(merged_intensity[1], bins=255, color='g', alpha=0.5)
-# plt.hist(merged_intensity[2], bins=255, color='b', alpha=0.5)
-# plt.show()
-
-# plt.hist(slices_1_intensity[0][0], bins=255, color='r', alpha=0.5)
-# plt.hist(slices_1_intensity[0][1], bins=255, color='g', alpha=0.5)
-# plt.hist(slices_1_intensity[0][2], bins=255, color='b', alpha=0.5)
-# plt.show()
-
-# scipy.stats.ranksums(LPS500res[0][0], NAres[2][0])
-
-
-
-
-
-
-# import matplotlib.pyplot as plt
-# import matplotlib.cm as cm
-# cmap = cm.Greys_r
-
-# import loader
-# import processing
-# import output
-
-# # input:
-# # input files (list of lists, condition1:[slice1:[img1, img2, ...], slice2:[img3, img4, ...]])
-# # input params: condition1 files, condition2 files, roi channel index, molecule channel index
-# # 
-
-# '''
-# Compares 2 conditions
-# Assume slices are described by N images. nucleus/molecule concentration (or any molecule to be considered)
-# '''
-
-# slices1_data = load.load_slices(slices1)
-# slices_1_gray = []
-# 	for i in slices_1:
-# 		slices_1_gray.append([])
-# 		slices_1_gray[len(slices_1_gray)-1].append(load.select_channel(i[0], channel = 1))
-# 		slices_1_gray[len(slices_1_gray)-1].append(load.select_channel(i[1], channel = 0))
-
-# 	slices2_data = load.load_slices(slices2)
-# 	slice1_distrib = []
-# 	for i in slices1_data:
-# 		slice1_distrib.append(analysis.get_intensity(i[0], i[1]))
-# 	slice2_distrib = []
-# 	for i in slices2_data:
-# 		slice2_distrib.append(analysis.litafnucleus(i[0], i[1]))
-# 	return(slice1_distrib, slice2_distrib)
-
-# def analyze_slices(slices1, slices2):
-# 	slices1_data = load.load_slices(slices1)
-# 	slices_1_gray = []
-# 	for i in slices_1:
-# 		slices_1_gray.append([])
-# 		slices_1_gray[len(slices_1_gray)-1].append(load.select_channel(i[0], channel = 1))
-# 		slices_1_gray[len(slices_1_gray)-1].append(load.select_channel(i[1], channel = 0))
-
-# 	slices2_data = load.load_slices(slices2)
-# 	slice1_distrib = []
-# 	for i in slices1_data:
-# 		slice1_distrib.append(analysis.get_intensity(i[0], i[1]))
-# 	slice2_distrib = []
-# 	for i in slices2_data:
-# 		slice2_distrib.append(analysis.litafnucleus(i[0], i[1]))
-# 	return(slice1_distrib, slice2_distrib)
-# #
-
-# AC = [
-# 	['data/AC_HSC_CTRL/01_nucleus.tif','data/AC_HSC_CTRL/01_LITAF.tif'],
-# 	['data/AC_HSC_CTRL/02_nucleus.tif','data/AC_HSC_CTRL/02_LITAF.tif'],
-# 	['data/AC_HSC_CTRL/03_nucleus.tif','data/AC_HSC_CTRL/03_LITAF.tif'],
-# 	['data/AC_HSC_CTRL/04_nucleus.tif','data/AC_HSC_CTRL/04_LITAF.tif'],
-# 	['data/AC_HSC_CTRL/05_nucleus.tif','data/AC_HSC_CTRL/05_LITAF.tif'],
-# 	['data/AC_HSC_CTRL/06_nucleus.tif','data/AC_HSC_CTRL/06_LITAF.tif']
-# 	]
-
-# NA = [
-# 	['data/NA_HSC_CTRL/01_nucleus.tif','data/NA_HSC_CTRL/01_LITAF.tif'],
-# 	['data/NA_HSC_CTRL/02_nucleus.tif','data/NA_HSC_CTRL/02_LITAF.tif'],
-# 	['data/NA_HSC_CTRL/03_nucleus.tif','data/NA_HSC_CTRL/03_LITAF.tif'],
-# 	['data/NA_HSC_CTRL/04_nucleus.tif','data/NA_HSC_CTRL/04_LITAF.tif'],
-# 	['data/NA_HSC_CTRL/05_nucleus.tif','data/NA_HSC_CTRL/05_LITAF.tif'],
-# 	['data/NA_HSC_CTRL/06_nucleus.tif','data/NA_HSC_CTRL/06_LITAF.tif']
-# 	]
-
-# intensity = analyze_slices(AC, NA)
-
-# plt.boxplot([intensity[0][0],intensity[1][0]])
-# output_file = 'test.png'
-# plt.savefig(output_file)
-
+    return data
