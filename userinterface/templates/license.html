@@ -19,22 +19,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>NanoWebGIS 3D - Process List</title>
+    <title>NanoWebGIS 3D - License</title>
 </head>
 
 <body>
 {% block intro-section-content %}
-    <h1 id="title">List of processes</h1>
-    {% if pList %}
-        <ul class="nav nav-tabs nav-stacked">
-            {% for i in pList %}
-                <li><a href="{% if i and i.status %}/ui/process/{{ i.id }} {% else %} /ui/celery_error/ {% endif %}">{{ i.process_type }} {{ i.id }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No processes are available.</p>
-    {% endif %}
-
+    <h1>License</h1>
     {% block thumbnails %}{% endblock %}
 {% endblock %}
 </body>

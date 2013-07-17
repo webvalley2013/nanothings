@@ -19,22 +19,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>NanoWebGIS 3D - Process List</title>
+    <title>NanoWebGIS 3D - Process Detail</title>
 </head>
 
 <body>
 {% block intro-section-content %}
-    <h1 id="title">List of processes</h1>
-    {% if pList %}
-        <ul class="nav nav-tabs nav-stacked">
-            {% for i in pList %}
-                <li><a href="{% if i and i.status %}/ui/process/{{ i.id }} {% else %} /ui/celery_error/ {% endif %}">{{ i.process_type }} {{ i.id }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No processes are available.</p>
-    {% endif %}
 
+    <h1>Celery is not running!</h1>
+    <p>Check out if celery is working properly.</p>
+    <p>To start celery: <code>manage.py celery worker --loglevel=info</code></p>
+    <p>Start rabbitMQ broker: <code>service rabbitmq-server start</code></p>
+    <a href="/ui/process_list/" class="btn btn-large">Back to process list</a>
     {% block thumbnails %}{% endblock %}
 {% endblock %}
 </body>

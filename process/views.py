@@ -1,3 +1,17 @@
+# This file is part of nanothings.
+#
+#     nanothings is free software: you can redistribute it and/or modify
+#     it under the terms of the GNU Affero GPL as published by
+#     the Free Software Foundation, either version 3 of the License, or
+#     (at your option) any later version.
+#
+#     Foobar is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU Affero GPL for more details.
+#
+#     You should have received a copy of the GNU Affero GPL
+#     along with nanothings.  If not, see <http://www.gnu.org/licenses/>.
 # MODULES
 from django.views.decorators.csrf import csrf_exempt
 from .models import Process, RunningProcess
@@ -57,7 +71,32 @@ def run_process_3d(request, p_id):
         # Add task to broker code
         try:
             outdir = create_dir_name(DEFAULT_OUTPUT_PATH)
-            task = run_3d_analisys.delay(parameters["nucleus1"], parameters["nucleus2"], parameters["litaf1"], parameters["litaf2"], outdir)
+
+            # Storing inputs in var
+            cond1 = []
+            cond2 = []
+            n1 = parameters["nucleus1"]
+            n2 = parameters["nucleus2"]
+            l1 = parameters["litaf1"]
+            l2 = parameters["litaf2"]
+            cond_lbl = parameters["conditions_labels"]
+            mask_lbl = parameters["mask_label"]
+            molecule_lbl = parameters["molecule_label"]
+
+            # split and strip
+            # Elaboration of inputs
+            cond_lbl_list = cond_lbl.split(",")
+
+            for i, val in enumerate(n1):
+                cond1.append([val, l1[i]])
+
+            for i, val in enumerate(n2):
+                cond2.append([val, l2[i]])
+
+            # Run the analysis
+            conditions = [cond1, cond2]
+            task = run_3d_analisys.delay(conditions, outdir, conditions_labels=cond_lbl_list,
+                                         mask_label=mask_lbl, molecule_label=molecule_lbl)
         except Exception as e:
             return {
                 'success': False,
@@ -72,7 +111,7 @@ def run_process_3d(request, p_id):
             p.task_id = task.id
             p.started = datetime.datetime.now()
             p.inputs = json.dumps(parameters)
-            p.save() # Save the running process to the DB
+            p.save()  # Save the running process to the DB
 
             # Return response to the client.
             return {
@@ -188,4 +227,3 @@ def detail(request, pk):
     j = json.dumps(data)
 
     return HttpResponse(j, content_type="application/json")
-

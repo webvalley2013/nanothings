@@ -1,9 +1,24 @@
+# This file is part of nanothings.
+#
+#     nanothings is free software: you can redistribute it and/or modify
+#     it under the terms of the GNU Affero GPL as published by
+#     the Free Software Foundation, either version 3 of the License, or
+#     (at your option) any later version.
+#
+#     Foobar is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU Affero GPL for more details.
+#
+#     You should have received a copy of the GNU Affero GPL
+#     along with nanothings.  If not, see <http://www.gnu.org/licenses/>.
 # MODULES
 from django.shortcuts import render, get_object_or_404
 from process.models import RunningProcess, Process
 from process.views import abort as api_abort
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
 
 #
@@ -25,6 +40,11 @@ def detail(request, p_id):
 @login_required
 def abort(request, p_id):
     return api_abort(request, p_id)
+
+
+@login_required
+def celery_error(request):
+    return render(request, "celeryerr.html")
 
 
 #
@@ -54,6 +74,16 @@ def networks(request):
     return render(request, "project/networks.html")
 
 
+def api_doc(request):
+    return render(request, "apidoc.html")
+
+
+def license(request):
+    return render(request, "license.html")
+
+#
+# LOGIN AND LOGOUT VIEWS
+#
 def login_view(request):
     username = request.POST['username']
     password = request.POST['password']
@@ -61,8 +91,8 @@ def login_view(request):
     if user is not None:
         if user.is_active:
             login(request, user)
-            return render(request, "index.html")
             # Redirect to a success page.
+            return redirect("home")
         else:
             # Return a 'disabled account' error message
             return render(request, "loginerr.html", {
@@ -77,4 +107,4 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return render(request, "index.html")
+    return redirect("home")

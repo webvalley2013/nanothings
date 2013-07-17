@@ -18,7 +18,7 @@ body {
     font-weight: 200;
     line-height: 30px;
 
-    background-color: rgb(238, 238, 238);
+    background-color: #999999;
     box-shadow: 0.3px 3px 3px #777;
     border-radius: 10px;
 }
@@ -37,6 +37,14 @@ body {
 
 .carousel slide {
     padding: 50px;
+}
+
+.carousel-inner {
+    border-radius: 20px;
+}
+
+.carousel-caption h1{
+    color: white;
 }
 
 .logo-about {
@@ -70,5 +78,9 @@ body {
 }
 
 .carousel-caption h1{
+    color: white;
+}
+
+.caption h3 , .caption p , #txtAbout, #title, #nome, #txtContacts , #titleR , #txtR, #titleNet,  #txtNet , #titleImg , #txtImg  {
     color: white;
 }
