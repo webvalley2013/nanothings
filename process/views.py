@@ -28,81 +28,13 @@ def mod(obj, current, *args, **kwargs):
 
 # Return a JSON with all the processes
 @ajax()
-@login_required
 def process_list(request):
     serializer = ListSerializer(item_serializer=DjangoModelSerializer())
     data = serializer.serialize(Process.objects.all(), modifiers=[mod])
     return data
 
-
-@ajax()
-@login_required
-def run_process_test(request, n1, n2):
-    # Load correct task from celery tasks
-    from tasks import add
-
-    # Add task to broker code
-    task = add.delay(n1, n2)
-
-    # Save running process to db
-    process_fk = Process.objects.get(code="process_test")
-    p = RunningProcess()
-    p.process_type = process_fk  # (3d, hadoop, R/PLR, ...)
-    p.task_id = task.id
-    p.started = datetime.datetime.now()
-    p.inputs = {
-        "n1": n1,
-        "n2": n2
-    }
-
-    p.save()  # Save the running process to the DB
-
-    # Return response to the client. TODO: Create correct getstatus url!
-    response = {
-        "success": True,
-        "polling_url": "/process/status/" + str(p.pk)
-    }
-
-    return response
-
-@login_required
-def run_process_get(request):
-
-    n1 = request.GET["n1"]
-    n2 = request.GET["n2"]
-
-    # Load correct task from celery tasks
-    from tasks import multiply
-
-    # Add task to broker code
-    task = multiply.delay(n1,n2)
-
-    # Save running process to db
-
-    process_fk = Process.objects.get(code="process_get")
-    p = RunningProcess()
-    p.process_type =  process_fk  # (3d, hadoop, R/PLR, ...)
-    p.task_id = task.id
-    p.started = datetime.datetime.now()
-    p.inputs = {
-        "n1": n1,
-        "n2": n2
-    }
-
-    p.save() # Save the running process to the DB
-
-    # Return response to the client. TODO: Create correct getstatus url!
-    response = {
-        "success": True,
-        "polling_url": "/status"
-    }
-    j = json.dumps(response)
-    return HttpResponse(j, content_type="application/json")
-
-
 @ajax(require_POST=True)
 @csrf_exempt
-@login_required
 def run_process_3d(request, p_id):
     try:
         proc = Process.objects.get(pk=p_id)
@@ -154,42 +86,60 @@ def run_process_3d(request, p_id):
             'message': 'input parameters were invalid'
         }, 400
 
-
+@ajax(require_POST=True)
 @csrf_exempt
-@login_required
-def run_process_post(request):
-    n1 = request.POST["n1"]
-    n2 = request.POST["n2"]
+def run_test_int(request, p_id):
+    try:
+        proc = Process.objects.get(pk=p_id)
+    except Process.DoesNotExist:
+        return {'success': False,
+                'message': 'process with id {0} does not exists'.format(p_id)}, 400
 
-    # Load correct task from celery tasks
-    from tasks import minus
+    if proc.type != '3d':
+        return {'success': False,
+                'message': 'process with id {0} is not a 3d analisys'.format(p_id)}, 400
 
-    # Add task to broker code
-    task = minus.delay(n1,n2)
 
-    # Save running process to db
+    # If the parameters are correct:
+    ProcessForm = FormFactory(proc).build_form()
+    form = ProcessForm(request.POST)
+    if form.is_valid():
+        parameters = form.save()
+        from .tasks import process_int
 
-    process_fk = Process.objects.get(process_code="process_post")
-    p = RunningProcess()
-    p.process_type =  process_fk# (3d, hadoop, R/PLR, ...)
-    p.task_id = task.id
-    p.started = datetime.datetime.now()
-    p.inputs = {
-        "n1": n1,
-        "n2": n2
-    }
+        # Add task to broker code
+        try:
+            task = process_int.delay(parameters["input1"], parameters["input2"], parameters["input3"])
+        except Exception as e:
+            return {
+                       'success': False,
+                       'message': 'Internal server error ' + e.message
+                   }, 500
+        else:
 
-    p.save()  # Save the running process to the DB
+            # Save running process to db
+            p = RunningProcess()
+            p.process_type = proc  # (3d, hadoop, R/PLR, ...)
+            p.task_id = task.id
+            p.started = datetime.datetime.now()
+            p.inputs = json.dumps(parameters)
+            p.save() # Save the running process to the DB
 
-    # Return response to the client. TODO: Create correct getstatus url!
-    response = {
-        "success": True,
-        "polling_url": "/status"
-    }
+            # Return response to the client.
+            return {
+                'success': True,
+                'polling_url': '/process/status/' + str(p.pk)
+            }
+
+    else:
+        return {
+                   'success': False,
+                   'message': 'input parameters were invalid'
+               }, 400
+
 
 
 @ajax()
-@login_required
 def status(request, pk):
     pr = RunningProcess.objects.get(id=pk)
 
