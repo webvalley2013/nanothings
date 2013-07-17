@@ -12,9 +12,9 @@ def add(x, y):
 
 
 @task()
-def multiply(x, y):
+def process_int(x, y, tsleep):
     import time
-    time.sleep(15)
+    time.sleep(tsleep)
     return x * y
 
 
