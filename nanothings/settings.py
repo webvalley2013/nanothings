@@ -162,7 +162,7 @@ LOGGING = {
 
 DEFAULT_INPUT_PATH = "/tmp/nanothings"
 DEFAULT_OUTPUT_PATH = "/tmp/outputs/"
-DEFAULT_HTTP_OUTPUT = "http://www.blabla.com/"  # e.g: ownCloud
+DEFAULT_HTTP_OUTPUT = "http://www.blabla.com/dasdasdasds"  # e.g: ownCloud
 
 CELERY_TRACK_STARTED = True
 BROKER_URL = "amqp://guest:guest@localhost:5672//"
