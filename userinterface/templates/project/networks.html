@@ -9,11 +9,21 @@
 </head>
 
 <body>
+
+{% block extra-scripts %}
+    <script>
+        $("li.active").removeClass("active");
+        $("li#projects").addClass("active");
+    </script>
+{% endblock %}
+
+
+
 {% block intro-section-content %}
-    <h2>
+    <h2 id=titleNet>
         Networks
     </h2>
-    <p>
+    <p id=txtNet>
         This is a template for a simple marketing or informational website.
         It includes a large callout called the hero unit and three supporting
         pieces of content. Use it as a starting point to create something more unique.

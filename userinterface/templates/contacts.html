@@ -9,12 +9,22 @@
 </head>
 
 <body>
+
+{% block extra-scripts %}
+    <script>
+        $("li.active").removeClass("active");
+        $("li#contacts").addClass("active");
+    </script>
+{% endblock %}
+
+
+
 {% block intro-section-content %}
-    <h2>
+    <h2 id= title>
         Contacts
     </h2>
-    <h4>Fondazione Bruno Kessler</h4>
-    <p>
+    <h4 id= nome>Fondazione Bruno Kessler</h4>
+    <p id= txtContacts>
         Via Sommarive, 18<br/>
         Povo (Trento) Italy 38123<br/>
         mobile:<br/>
