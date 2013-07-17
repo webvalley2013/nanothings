@@ -5,15 +5,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>NanoWebGIS 3D - About</title>
+    <title> 3D NanoWebGIS - About</title>
 </head>
 
 <body>
+{% block extra-scripts %}
+    <script>
+        $("li.active").removeClass("active");
+        $("li#about").addClass("active");
+    </script>
+{% endblock %}
+
 {% block intro-section-content %}
-    <h2>
-        About
     </h2>
-    <img src="{% static 'userinterface/img/logowv.png' %}" class="logo-about" />
+    <img src="{% static 'userinterface/img/logowv.png' %}" class="logo-about"/>
     <p>
         The 2013 project: 3D nanoWebGIS interface and complex networks for molecular
         medicine data. The aim of WebValley 2013 is designing a novel web tool for

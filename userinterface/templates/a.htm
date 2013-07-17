@@ -1,0 +1,77 @@
+"<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Webvalley 2012</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <script src="bootstrap/js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">/*  Backstretch does not support slideshows out of the box (yet)  But, it's fairly easy to set one up.  Here is an example of how to use Backstretch as a slideshow.*/
+    var images = [      "bootstrap/img/bg/1.jpg"    , "bootstrap/img/bg/2.jpg"    , "bootstrap/img/bg/3.jpg"    , "bootstrap/img/bg/4.jpg"  ];  // A little script for preloading all of the images  // It"s not necessary, but generally a good idea  $(images).each(function(){    $("<img/>")[0].src = this;   });  // The index variable will keep track of which image is currently showing  var index = 0;  // Call backstretch for the first time,  // In this case, I"m settings speed of 500ms for a fadeIn effect between images.  $.backstretch(images[index], {speed: 500});  // Set an interval that increments the index and sets the new image  // Note: The fadeIn speed set above will be inherited  setInterval(function() {    index = (index >= images.length - 1) ? 0 : index + 1;    $.backstretch(images[index]);  }, 5000);    </script>
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link href="style.css" rel="stylesheet"/>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>    <![endif]-->
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico"/>
+    <!-- <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png" />    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png" />    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png" />    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png" />-->
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container"><a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span
+                class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a
+                class="brand" href="#">WebValley</a>
+
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Browse</a></li>
+                </ul>
+                <form class="navbar-search pull-left" action=""><input type="text" class="search-query span2"
+                                                                       placeholder="Search"></form>
+                <ul class="nav pull-right">
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">About</a></li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Join</a></li>
+                </ul>
+            </div>
+            <!-- /.nav-collapse -->      </div>
+    </div>
+    <!-- /navbar-inner -->  </div>
+<!-- /navbar -->
+<div class="container">      <!-- Main hero unit for a primary marketing message or call to action -->
+    <div class="hero-unit"><h1>Discover again.</h1>
+
+        <p>This project was made for collaboration and sharing of all of your microscopy data. Simply login to
+            begin!</p>
+
+        <form class="form-inline" action="#">
+            <div class="row-fluid">
+                <div class="span6"><p><input type="text" class="input-medium" placeholder="Email"> <input
+                        type="password" class="input-small" placeholder="Password"></p>
+
+                    <p>
+                        <button type="submit" class="btn btn-primary btn-large">Login &raquo;</button>
+                        <label class="checkbox"> <input type="checkbox"> Remember me </label></p>
+                </div>
+                <div class="span6" style="text-align:right;padding-top:27px;">                    &nbsp;&nbsp;<a
+                        class="btn btn-warning btn-huge"><img src="bootstrap/img/info.png"></img>&nbsp;About &raquo;</a>
+                    &nbsp;&nbsp;<a class="btn btn-danger btn-huge"><img
+                            src="bootstrap/img/group.png"></img>&nbsp;Join &raquo;</a> &nbsp;&nbsp;<a
+                            class="btn btn-success btn-huge"><img
+                            src="bootstrap/img/search.png"></img>&nbsp;Browse &raquo;</a></div>
+            </div>
+        </form>
+    </div>
+    <footer><p>&copy; WebValley 2012</p></footer>
+</div>
+<!-- /container -->  </body>
+</html>"

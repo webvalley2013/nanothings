@@ -1,28 +1,19 @@
-body
-{
-	background-color: #fff;
+body {
+    background-color: #fff;
     padding-bottom: 50px;
 }
 
-#title
-{
-	margin-bottom: 50px;
-	margin-top: 50px;
+#title {
+    margin-bottom: 50px;
+    margin-top: 50px;
 }
 
-.form-horiziontal
-{
-	margin-top: 100px;
-	padding:10px;
-}
-.span3
-{
-	margin-top: 100px;
-	padding:10px;
+.form-horiziontal {
+    margin-top: 100px;
+    padding: 10px;
 }
 
-.main-section
-{
+.main-section {
     font-size: 18px;
     font-weight: 200;
     line-height: 30px;
@@ -32,15 +23,19 @@ body
     border-radius: 10px;
 }
 
-.signin-menu{
+.signin-menu {
     padding: 50px;
 }
 
-.caption{
-   text-align: center;
+.caption {
+    text-align: center;
 }
 
 .content {
+    padding: 50px;
+}
+
+.carousel slide {
     padding: 50px;
 }
 
@@ -62,3 +57,18 @@ body
     margin-bottom: 15px;
 }
 
+.thumbnail {
+    border: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.navbar {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.carousel-caption h1{
+    color: white;
+}
