@@ -10,7 +10,6 @@
 
 <body>
 {% block intro-section-content %}
-    {% if pr %}
         <h1>Process properties</h1>
         <ul class="prop">
             <li>ID: {{ pr.task_id }}</li>
@@ -22,7 +21,6 @@
             <li>STATUS: {{ pr.status }}</li>
         </ul>
         <a href="/ui/process/abort/{{ pr.id }}/" class="btn btn-primary btn-large">Abort process</a>
-    {% endif %}
 
     {% block thumbnails %}{% endblock %}
 {% endblock %}

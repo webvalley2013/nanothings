@@ -14,7 +14,7 @@
     {% if pList %}
         <ul class="nav nav-tabs nav-stacked">
             {% for i in pList %}
-                <li><a href="/ui/process/{{ i.id }}/">{{ i.process_type }} {{ i.id }}</a></li>
+                <li><a href="{% if i and i.status %}/ui/process/{{ i.id }} {% else %} /ui/celery_error/ {% endif %}">{{ i.process_type }} {{ i.id }}</a></li>
             {% endfor %}
         </ul>
     {% else %}

@@ -39,6 +39,14 @@ body {
     padding: 50px;
 }
 
+.carousel-inner {
+    border-radius: 20px;
+}
+
+.carousel-caption h1{
+    color: white;
+}
+
 .logo-about {
     display: block;
     margin-left: auto;
@@ -67,8 +75,4 @@ body {
     float: none;
     margin-left: auto;
     margin-right: auto;
-}
-
-.carousel-caption h1{
-    color: white;
 }

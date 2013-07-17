@@ -51,8 +51,10 @@
                                 <li><a href="/ui/networks/">Networks</a></li>
                             </ul>
                         </li>
+                        <li><a href="/ui/api_documentation">API documentation</a></li>
+                        <li><a href="/ui/license">License</a></li>
                         {% if user.is_superuser %}
-                            <li><a href="#">Process Management</a></li>
+                            <li><a href="/ui/process_list">Process Management</a></li>
                         {% endif %}
                     </ul>
 
@@ -78,7 +80,7 @@
                                             {#</div>#}
                                             {% if not user.is_authenticated %}
                                                 <p>
-                                                    <label for="username">Email</label>
+                                                    <label for="username">Username</label>
                                                     <input id="username" name="username" value="" tabindex="1"
                                                            type="text">
                                                 </p>
@@ -136,33 +138,36 @@
                             <div class="carousel-inner">
                                 <div class="item active" id="ed-base">
                                     <div class="carousel-caption">
-                                        <h1>
-                                            3D NanoWebGIS </h1>
+                                        <h1>3D NanoWebGIS </h1>
 
-                                        <p> 3D nanoWebGIS interface and complex networks for molecular
-                                            medicine data.</p>
+                                        <p>
+                                            3D nanoWebGIS interface and complex networks for molecular
+                                            medicine data.
+                                        </p>
                                     </div>
                                     <img src="{% static "userinterface/img/bg/00.jpg" %}" alt=""/>
                                 </div>
 
                                 <div class="item" id="agility">
                                     <div class="carousel-caption">
-                                        <h1>
-                                            3D NanoWebGIS</h1>
+                                        <h1>3D NanoWebGIS</h1>
 
-                                        <p> 3D nanoWebGIS interface and complex networks for molecular
-                                            medicine data.</p>
+                                        <p>
+                                            3D nanoWebGIS interface and complex networks for molecular
+                                            medicine data.
+                                        </p>
                                     </div>
                                     <img src="{% static "userinterface/img/bg/01.jpg" %}" alt="">
                                 </div>
 
                                 <div class="item" id="fdsegfffffffffffffffff">
                                     <div class="carousel-caption">
-                                        <h1>
-                                            3D NanoWebGIS</h1>
+                                        <h1>3D NanoWebGIS</h1>
 
-                                        <p> 3D nanoWebGIS interface and complex networks for molecular
-                                            medicine data.</p>
+                                        <p>
+                                            3D nanoWebGIS interface and complex networks for molecular
+                                            medicine data.
+                                        </p>
                                     </div>
                                     <img src="{% static "userinterface/img/bg/03.jpg" %}" alt="">
                                 </div>
@@ -194,7 +199,7 @@
                                     <div class="caption">
 
                                         <h3>
-                                            Userfriendly
+                                            User Friendly
                                         </h3>
 
                                         <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/>
@@ -220,7 +225,6 @@
                                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. <br/>
                                             Aenean commodo ligula eget dolor.<br/>
                                             Aenean massa.
-
                                         </p>
                                     </div>
                                 </div>
@@ -234,13 +238,12 @@
 
                                     <div class="caption">
                                         <h3>
-                                            images in 3D
+                                            Images in 3D
                                         </h3>
 
                                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/>
                                             Aenean commodo ligula eget dolor. <br/>
                                             Aenean massa.
-
                                         </p>
                                     </div>
                                 </div>

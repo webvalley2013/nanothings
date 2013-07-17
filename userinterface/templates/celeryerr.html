@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+{% load staticfiles %}
+{% load url from future %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>NanoWebGIS 3D - Process Detail</title>
+</head>
+
+<body>
+{% block intro-section-content %}
+
+    <h1>Celery is not running!</h1>
+    <p>Check out if celery is working properly.</p>
+    <p>To start celery: <code>manage.py celery worker --loglevel=info</code></p>
+    <p>Start rabbitMQ broker: <code>service rabbitmq-server start</code></p>
+    <a href="/ui/process_list/" class="btn btn-large">Back to process list</a>
+    {% block thumbnails %}{% endblock %}
+{% endblock %}
+</body>
+</html>

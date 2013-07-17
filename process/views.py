@@ -187,6 +187,7 @@ def run_process_post(request):
         "polling_url": "/status"
     }
 
+
 @ajax()
 @login_required
 def status(request, pk):
