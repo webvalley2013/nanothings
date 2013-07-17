@@ -35,18 +35,6 @@ body {
     padding: 50px;
 }
 
-.carousel slide {
-    padding: 50px;
-}
-
-.carousel-inner {
-    border-radius: 20px;
-}
-
-.carousel-caption h1{
-    color: white;
-}
-
 .logo-about {
     display: block;
     margin-left: auto;
@@ -77,10 +65,57 @@ body {
     margin-right: auto;
 }
 
+.caption h3 , .caption p , #txtAbout, #title, #nome, #txtContacts ,
+#titleR , #txtR, #titleNet,  #txtNet , #titleImg , #txtImg , #titleLicense, #txtLicense,
+#titleApi, #txtApi {
+    color: white;
+}
+
 .carousel-caption h1{
     color: white;
 }
 
-.caption h3 , .caption p , #txtAbout, #title, #nome, #txtContacts , #titleR , #txtR, #titleNet,  #txtNet , #titleImg , #txtImg  {
+.carousel slide {
+    padding: 50px;
+}
+
+.carousel-inner {
+    border-radius: 20px;
+}
+
+.carousel-caption h1 {
     color: white;
+}
+
+.carousel-fade .carousel-inner .item {
+  opacity: 0;
+  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;
+}
+
+.carousel-fade .carousel-inner .active {
+  opacity: 1;
+}
+
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+  left: 0;
+  opacity: 0;
+  z-index: 1;
+}
+
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right {
+  opacity: 1;
+}
+
+.carousel-fade .carousel-control {
+  z-index: 2;
+}
+
+.thumbnails {
+    margin: 0 auto;
+    width: 95%;
 }
