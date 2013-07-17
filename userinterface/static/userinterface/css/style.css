@@ -39,6 +39,14 @@ body {
     padding: 50px;
 }
 
+.carousel-inner {
+    border-radius: 20px;
+}
+
+.carousel-caption h1{
+    color: white;
+}
+
 .logo-about {
     display: block;
     margin-left: auto;
@@ -76,4 +84,3 @@ body {
 .caption h3 , .caption p , #txtAbout, #title, #nome, #txtContacts , #titleR , #txtR, #titleNet,  #txtNet , #titleImg , #txtImg  {
     color: white;
 }
-
