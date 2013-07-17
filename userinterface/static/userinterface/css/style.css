@@ -34,8 +34,8 @@ body {
     font-weight: 200;
     line-height: 30px;
 
-    background-color: #999999;
-    box-shadow: 0.3px 3px 3px #777;
+    background-color: #c1c1c1;
+    box-shadow: 0.3px 3px 6px #343434;
     border-radius: 10px;
 }
 
@@ -81,16 +81,6 @@ body {
     margin-right: auto;
 }
 
-.caption h3 , .caption p , #txtAbout, #title, #nome, #txtContacts ,
-#titleR , #txtR, #titleNet,  #txtNet , #titleImg , #txtImg , #titleLicense, #txtLicense,
-#titleApi, #txtApi {
-    color: white;
-}
-
-.carousel-caption h1{
-    color: white;
-}
-
 .carousel slide {
     padding: 50px;
 }
@@ -134,4 +124,10 @@ body {
 .thumbnails {
     margin: 0 auto;
     width: 95%;
+}
+
+.thumbnail .caption { color: #333; }
+
+.container {
+    color: #333;
 }
