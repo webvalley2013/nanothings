@@ -5,17 +5,18 @@
 #     the Free Software Foundation, either version 3 of the License, or
 #     (at your option) any later version.
 #
-#     Foobar is distributed in the hope that it will be useful,
+#     nanothings is distributed in the hope that it will be useful,
 #     but WITHOUT ANY WARRANTY; without even the implied warranty of
 #     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #     GNU Affero GPL for more details.
 #
 #     You should have received a copy of the GNU Affero GPL
 #     along with nanothings.  If not, see <http://www.gnu.org/licenses/>.
-from django.conf.urls import patterns, include, url
 
-# Uncomment the next two lines to enable the admin:
+# MODULES
+from django.conf.urls import patterns, include, url
 from django.contrib import admin
+
 admin.autodiscover()
 
 urlpatterns = patterns('',

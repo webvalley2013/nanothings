@@ -5,14 +5,17 @@
 #     the Free Software Foundation, either version 3 of the License, or
 #     (at your option) any later version.
 #
-#     Foobar is distributed in the hope that it will be useful,
+#     nanothings is distributed in the hope that it will be useful,
 #     but WITHOUT ANY WARRANTY; without even the implied warranty of
 #     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #     GNU Affero GPL for more details.
 #
 #     You should have received a copy of the GNU Affero GPL
 #     along with nanothings.  If not, see <http://www.gnu.org/licenses/>.
+
+# MODULES
 import djcelery
+
 djcelery.setup_loader()
 
 DEBUG = True
@@ -176,7 +179,7 @@ LOGGING = {
 
 DEFAULT_INPUT_PATH = "/tmp/nanothings"
 DEFAULT_OUTPUT_PATH = "/tmp/outputs/"
-DEFAULT_HTTP_OUTPUT = "http://www.blabla.com/"  # e.g: ownCloud
+DEFAULT_HTTP_OUTPUT = "http://www.blabla.com"  # e.g: ownCloud
 
 CELERY_TRACK_STARTED = True
 BROKER_URL = "amqp://guest:guest@localhost:5672//"
