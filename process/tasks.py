@@ -26,8 +26,8 @@ def minus(x, y):
 
 
 @task()
-def run_3d_analisys(n1, n2, l1, l2, outpath):
-    main2d.main(n1, n2, l1, l2, outpath)
+def run_3d_analisys(cond, outpath, conditions_labels, mask_label, molecule_label):
+    main2d.test1(cond, outpath, conditions_labels, mask_label, molecule_label)
     return DEFAULT_HTTP_OUTPUT + outpath
 
 

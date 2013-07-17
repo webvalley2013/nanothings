@@ -2,7 +2,8 @@ import scipy.ndimage
 import mahotas
 import numpy as np
 import scipy.stats
-from . import loader
+import loader
+import output
 
 # # # # # # # # # # # # 
 #  Single image of pairs of images analysis
@@ -61,6 +62,10 @@ def compare_distributions(dist1, dist2):
 
 '''
 Get molecular distribution from a deck of slices
+For each slice evaluate:
+- amount of molecule in pixels selected by mask
+- amount of molecule in pixels from all the molecule image
+- amount of molecule in pixels from all the molecule image but mask
 '''
 
 
@@ -121,11 +126,37 @@ def get_molecule_distribution(dataset,
     data['slices_dataset'] = dataset
 
     return (data)
-    #
 
-    # def compare_molecule_distribution(dataset,
-    # 		nucleus_index = 0, molecule_index = 1,
-    # 		nucleus_channel = 1, molecule_channel = 0,
-    # 		nucleus_fill_holes = True, nucleus_otsu = True,
-    # 		molecule_fill_holes = False, molecule_otsu = True
-    # 		):
+#
+
+# def compare_molecule_distribution(dataset,
+# 		nucleus_index = 0, molecule_index = 1,
+# 		nucleus_channel = 1, molecule_channel = 0,
+# 		nucleus_fill_holes = True, nucleus_otsu = True,
+# 		molecule_fill_holes = False, molecule_otsu = True
+# 		):
+
+def compare_molecule_distribution(datasets,
+                                  nucleus_index=0, molecule_index=1,
+                                  nucleus_channel=1, molecule_channel=0,
+                                  nucleus_fill_holes=True, nucleus_otsu=True,
+                                  molecule_fill_holes=False, molecule_otsu=True):
+    conditions = []
+    for i in datasets:
+        conditions.append(get_molecule_distribution(i,
+                                                    nucleus_index=nucleus_index, molecule_index=molecule_index,
+                                                    nucleus_channel=nucleus_channel, molecule_channel=molecule_channel,
+                                                    nucleus_fill_holes=nucleus_fill_holes, nucleus_otsu=nucleus_otsu,
+                                                    molecule_fill_holes=molecule_fill_holes,
+                                                    molecule_otsu=molecule_otsu))
+    return conditions
+
+#
+
+def get_molecule_pos(data):
+    for i in range(0, len(data['slices_mask'])):
+        temp = np.where(data['slices_mask'][i] == 1)
+        XY = np.vstack((SC[0], SC[1], data['slices_mask'][i][temp]))
+    return XY
+
+#
