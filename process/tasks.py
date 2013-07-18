@@ -17,7 +17,7 @@
 from celery import task
 from .extralib.imageanalisys import main2d
 from nanothings.settings import DEFAULT_HTTP_OUTPUT
-
+import psycopg2
 
 @task()
 def add(x, y):
@@ -27,10 +27,9 @@ def add(x, y):
 
 
 @task()
-def process_int(x, y, tsleep):
-    import time
-    time.sleep(tsleep)
-    return x * y
+def process_int(url_list1, url_list2, url_list3, int1):
+    out = [url_list1, url_list2, url_list3, int1]
+    return out
 
 
 @task()
@@ -43,9 +42,27 @@ def minus(x, y):
 @task()
 def run_3d_analisys(cond, outpath, conditions_labels, mask_label, molecule_label):
     main2d.test1(cond, outpath, conditions_labels, mask_label, molecule_label)
-    return DEFAULT_HTTP_OUTPUT + outpath
+    return DEFAULT_HTTP_OUTPUT + "&path=/" + outpath
 
+# parameters["url_pathways"], parameters["url_data"], parameters["sel_pathways"], parameters["thr"]
+@task()
+def process_plr(url_pathways, url_data, sel_pathways, thr):
+    # try:
+        # cursor = connection.cursor()
+    # cursor.execute(
+    #     "select correlation_networks('http://192.168.205.138:8080/wang11synergy_pathways.csv','http://192.168.205.138:8080/wang11synergy_data.csv', 4910, 0.9)"
+    # )
+    #
+    # except DatabaseError, e:
+    #     transaction.rollback()
+    #     msg = {
+    #         "success": False,
+    #         "message": str(e)
+    #     }
+    #     return HttpResponseBadRequest(json.dumps(msg))
+    conn =  psycopg2.connect("dbname=wvtestmi user=postgres password=postgres host=192.168.205.10")
+    cur = conn.cursor()
+    cur.execute("select correlation_networks('http://192.168.205.138:8080/wang11synergy_pathways.csv','http://192.168.205.138:8080/wang11synergy_data.csv', 4910, 0.9);")
+    res = cur.fetchone()
 
-
-
-
+    return res[0]

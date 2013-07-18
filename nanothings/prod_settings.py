@@ -19,6 +19,7 @@ from unipath import Path
 
 djcelery.setup_loader()
 
+
 SITE_ROOT = Path(__file__).ancestor(2)
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
