@@ -28,10 +28,9 @@ def add(x, y):
 
 
 @task()
-def process_int(x, y, tsleep):
-    import time
-    time.sleep(tsleep)
-    return x * y
+def process_int(url_list1, url_list2, url_list3, int1):
+    out = [url_list1, url_list2, url_list3, int1]
+    return out
 
 
 @task()

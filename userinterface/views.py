@@ -71,8 +71,8 @@ def r_plr(request):
     return render(request, "project/r_plr.html")
 
 
-def networks(request):
-    return render(request, "project/networks.html")
+def hadoop(request):
+    return render(request, "project/hadoop.html")
 
 
 def api_doc(request):
