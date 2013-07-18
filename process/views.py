@@ -139,9 +139,9 @@ def run_test_int(request, p_id):
         return {'success': False,
                 'message': 'process with id {0} does not exists'.format(p_id)}, 400
 
-    if proc.type != '3d':
+    if proc.type != 'plr':
         return {'success': False,
-                'message': 'process with id {0} is not a 3d analisys'.format(p_id)}, 400
+                'message': 'process with id {0} is not a network analisys'.format(p_id)}, 400
 
 
     # If the parameters are correct:
@@ -153,7 +153,7 @@ def run_test_int(request, p_id):
 
         # Add task to broker code
         try:
-            task = process_int.delay(parameters["input1"], parameters["input2"], parameters["input3"])
+            task = process_int.delay(parameters["test_url1"], parameters["test_url2"], parameters["test_url3"], parameters["test_int"])
         except Exception as e:
             return {
                        'success': False,
