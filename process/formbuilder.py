@@ -42,8 +42,8 @@ class FormFactory(object):
 
     def _get_field(self, type):
         form_fields = {
-            'int': forms.IntegerField(required=True),
-            'string': forms.CharField(required=True),
+            'int': forms.IntegerField(required=False),
+            'string': forms.CharField(required=False),
             #'image': forms.ImageField(required=True),
             'url_list': URLListField(required=True)
         }

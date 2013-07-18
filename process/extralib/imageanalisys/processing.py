@@ -61,7 +61,8 @@ def get_molecule_distribution(dataset,
                               nucleus_index = 0, molecule_index = 1,
                               nucleus_channel = 1, molecule_channel = 0,
                               nucleus_fill_holes = True, nucleus_otsu = True,
-                              molecule_fill_holes = False, molecule_otsu = True
+                              molecule_fill_holes = False, molecule_otsu = True,
+                              single_object_analysis = False
 ):
 
     slices = loader.load_slices(dataset)
@@ -129,13 +130,15 @@ def compare_molecule_distribution(datasets,
                                   nucleus_index = 0, molecule_index = 1,
                                   nucleus_channel = 1, molecule_channel = 0,
                                   nucleus_fill_holes = True, nucleus_otsu = True,
-                                  molecule_fill_holes = False, molecule_otsu = True
+                                  molecule_fill_holes = False, molecule_otsu = True,
+                                  single_object_analysis = False
 ):
     conditions = []
     for i in datasets:
         conditions.append(get_molecule_distribution(i,
                                                     nucleus_index = nucleus_index, molecule_index = molecule_index, nucleus_channel = nucleus_channel, molecule_channel = molecule_channel,
-                                                    nucleus_fill_holes = nucleus_fill_holes, nucleus_otsu = nucleus_otsu, molecule_fill_holes = molecule_fill_holes, molecule_otsu = molecule_otsu))
+                                                    nucleus_fill_holes = nucleus_fill_holes, nucleus_otsu = nucleus_otsu, molecule_fill_holes = molecule_fill_holes, molecule_otsu = molecule_otsu,
+                                                    single_object_analysis = single_object_analysis))
     return conditions
 #
 

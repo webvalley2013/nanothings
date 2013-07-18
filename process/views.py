@@ -72,55 +72,62 @@ def run_process_3d(request, p_id):
         parameters = form.save()
         from .tasks import run_3d_analisys
 
-        # Add task to broker code
-        try:
-            outdir = create_dir_name(DEFAULT_OUTPUT_PATH)
+    # Add task to broker code
+    # try:
+        outdir = create_dir_name(DEFAULT_OUTPUT_PATH)
 
-            # Storing inputs in var
-            cond1 = []
-            cond2 = []
-            n1 = parameters["nucleus1"]
-            n2 = parameters["nucleus2"]
-            l1 = parameters["litaf1"]
-            l2 = parameters["litaf2"]
-            cond_lbl = parameters["conditions_labels"]
-            slice_label = parameters["mask_label"]
-            channel_labels = parameters["molecule_label"]
+        # Storing inputs in var
+        cond1 = []
+        cond2 = []
+        n1 = parameters["nucleus1"]
+        n2 = parameters["nucleus2"]
+        l1 = parameters["litaf1"]
+        l2 = parameters["litaf2"]
+        cond_lbl = parameters["conditions_labels"]
+        slice_label = parameters["slice_labels"]
+        channel_labels = parameters["channel_labels"]
+        mask_index = parameters["mask_index"]
+        molecule_index = parameters["molecule_index"]
+        mask_channel = parameters["mask_channel"]
+        molecule_channel = parameters["molecule_channel"]
 
-            # split and strip
-            # Elaboration of inputs
-            cond_lbl_list = cond_lbl.split(",")
+        # split and strip
+        # Elaboration of inputs
+        cond_lbl_list = cond_lbl.split(",")
+        chan_lbl_list = channel_labels.split(",")
+        for i, val in enumerate(n1):
+            cond1.append([val, l1[i]])
 
-            for i, val in enumerate(n1):
-                cond1.append([val, l1[i]])
+        for i, val in enumerate(n2):
+            cond2.append([val, l2[i]])
 
-            for i, val in enumerate(n2):
-                cond2.append([val, l2[i]])
+        # Run the analysis
+        conditions = [cond1, cond2]
+        task = run_3d_analisys.delay(conditions, outdir, cond_lbl_list,
+                                     slice_label, chan_lbl_list,
+                                     mask_index, molecule_index,
+                                     mask_channel, molecule_channel
+                                    )
+    # except Exception as e:
+    #     return {
+    #         'success': False,
+    #         'message': 'Internal server error ' + e.message
+    #     }, 500
+    # else:
 
-            # Run the analysis
-            conditions = [cond1, cond2]
-            task = run_3d_analisys.delay(conditions, outdir, cond_lbl_list,
-                                         slice_label, channel_labels)
-        except Exception as e:
-            return {
-                'success': False,
-                'message': 'Internal server error ' + e.message
-            }, 500
-        else:
+        # Save running process to db
+        p = RunningProcess()
+        p.process_type = proc  # (3d, hadoop, R/PLR, ...)
+        p.task_id = task.id
+        p.started = datetime.datetime.now()
+        p.inputs = json.dumps(parameters)
+        p.save()  # Save the running process to the DB
 
-            # Save running process to db
-            p = RunningProcess()
-            p.process_type = proc  # (3d, hadoop, R/PLR, ...)
-            p.task_id = task.id
-            p.started = datetime.datetime.now()
-            p.inputs = json.dumps(parameters)
-            p.save()  # Save the running process to the DB
-
-            # Return response to the client.
-            return {
-                'success': True,
-                'polling_url': '/process/status/' + str(p.pk)
-            }
+        # Return response to the client.
+        return {
+            'success': True,
+            'polling_url': '/process/status/' + str(p.pk)
+        }
 
     else:
         return {

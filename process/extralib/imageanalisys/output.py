@@ -4,6 +4,7 @@ import numpy as np
 import math
 from PIL import Image
 from scipy.stats import gaussian_kde
+import os
 
 def plot(data, outfile = None):
     fig = plt.figure(figsize=(15.0, 15.0))
@@ -31,12 +32,12 @@ def histogram(data, labels = None, outfile = None, log=False, histtype='stepfill
         xminim = 0
         xmaxim = 256
 
-        for i in range(0,len(data)):
-            temp = plt.hist(data[i], normed = True, bins=bins, alpha=0.5, label = labels[i], log=log, histtype=histtype)
-            if maxim < temp[0].max():
-                maxim = temp[0].max()
-            if xmaxim < temp[1].max():
-                xmaxim = math.ceil(temp[1].max())
+        # for i in range(0,len(data)):
+        # 	temp = plt.hist(data[i], normed = True, bins=bins, alpha=0.5, label = labels[i], log=log, histtype=histtype)
+        # 	if maxim < temp[0].max():
+        # 		maxim = temp[0].max()
+        # 	if xmaxim < temp[1].max():
+        # 		xmaxim = math.ceil(temp[1].max())
         plt.clf()
         for i in range(0,len(data)):
             if color == None:
@@ -46,20 +47,29 @@ def histogram(data, labels = None, outfile = None, log=False, histtype='stepfill
                     xs = np.linspace(xminim,xmaxim,bins)
                     density.covariance_factor = lambda : .25
                     density._compute_covariance()
-                    plt.plot(xs,density(xs), label = labels[i])
+                    # print xs
+                    # print density(xs)
+                    if not log:
+                        plt.plot(xs,density(xs), label = labels[i])
+                    else:
+                        plt.plot(xs,density(xs), label = labels[i])
                 except Exception:
                     pass
-            # plt.hist(data[i], bins=bins, alpha=0.5, label = labels[i], log=log, histtype=histtype)
             else:
+                dataf = data[i].astype(np.float32)
                 try:
-                    dataf = data[i].astype(np.float32)
                     density = gaussian_kde(dataf)
                     xs = np.linspace(xminim,xmaxim,bins)
                     density.covariance_factor = lambda : .25
                     density._compute_covariance()
-                    plt.plot(xs,density(xs), label = labels[i], color = color[i])
+                    # plt.plot(xs,density(xs), label = labels[i], color = color[i])
+                    if not log:
+                        plt.plot(xs,density(xs), label = labels[i], color = color[i])
+                    else:
+                        plt.plot(xs,density(xs), label = labels[i], color = color[i])
                 except Exception:
                     pass
+
         plt.xlabel('Intensity')
         plt.ylabel('Number of occurrences')
         plt.xlim(0, xmaxim)
@@ -284,34 +294,60 @@ def select_arrays(x, name = 'slices_intensity', merged=False, what=[0], conditio
 
 def plot_all(data, conditions, out_folder = '.', condition_labels = None, obj_labels = None, channel_labels = None):
 
-# SINGLE CONDITION - mask vs all - histo + boxplot - merged slices
-    for i in range(0,len(data)):
-        temp = select_arrays([data[i]],
-                             name = 'slices_intensity', merged = True, what = [0,1],
-                             condition_labels = [condition_labels[i]], obj_labels = obj_labels, channel_labels = channel_labels)
-        color = ['green', 'red']*(len(temp[0])/2)
-        histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=128, color = color, outfile = out_folder + '/' + condition_labels[i] + '_merged_histogram.png')
-        histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=128, color = color, outfile = out_folder + '/' + condition_labels[i] + '_merged_histogram_density.png', density=True)
-        boxplot(temp[0], labels = temp[1], outfile = out_folder + '/' + condition_labels[i] + '_merged_boxplot.png', xrotation = 45)
+    if condition_labels == None:
+        condition_labels = []
+        for i in range(0,len(data)):
+            condition_labels.append('condition ' + str(i))
 
-    # SINGLE CONDITION - mask vs all - histo + boxplot - single slices
+    out_folder_results_single = out_folder + '/data/'
+    out_folder_results_cmp = out_folder + '/comparison/'
+    out_folder_images = out_folder + '/images/'
+
+    if os.path.exists(out_folder):
+        if not os.path.isdir(out_folder):
+            raise Exception
+    else:
+        os.makedirs(out_folder)
+
+    if os.path.exists(out_folder_results_single):
+        if not os.path.isdir(out_folder_results_single):
+            raise Exception
+    else:
+        os.makedirs(out_folder_results_single)
+
+    if os.path.exists(out_folder_images):
+        if not os.path.isdir(out_folder_images):
+            raise Exception
+    else:
+        os.makedirs(out_folder_images)
+
+    if os.path.exists(out_folder_results_cmp):
+        if not os.path.isdir(out_folder_results_cmp):
+            raise Exception
+    else:
+        os.makedirs(out_folder_results_cmp)
+
     for i in range(0,len(data)):
-        temp = select_arrays([data[i]],
-                             name = 'slices_intensity', merged = False, what = [0,1],
-                             condition_labels = [condition_labels[i]], obj_labels = obj_labels, channel_labels = channel_labels)
-        color = ['green', 'red']*(len(temp[0])/2)
-        histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=128, color = color, outfile = out_folder + '/' + condition_labels[i] + '_histogram.png')
-        histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=128, color = color, outfile = out_folder + '/' + condition_labels[i] + '_histogram_density.png', density=True)
-        boxplot(temp[0], labels = temp[1], outfile = out_folder + '/' + condition_labels[i] + '_boxplot.png', xrotation = 45)
+        newd = out_folder_results_single + condition_labels[i] + "/"
+        if os.path.exists(newd):
+            if not os.path.isdir(newd):
+                raise Exception
+        else:
+            os.makedirs(newd)
+
+
+    bins = 32
+    xrot = 30
 
     # INTER CONDITION - masks - histo + boxplot - merged slices
     temp = select_arrays(data,
                          name = 'slices_intensity', merged = True, what = [0],
                          condition_labels = condition_labels, obj_labels = obj_labels, channel_labels = channel_labels)
 
-    boxplot(temp[0], labels = temp[1], outfile = out_folder + '/' + 'merged_boxplots.png', xrotation = 45)
-    histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=128, color = None, outfile = out_folder + '/' + 'merged_histograms.png')
-    histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=128, color = None, outfile = out_folder + '/' + 'merged_histograms_density.png', density=True)
+    boxplot(temp[0], labels = temp[1], outfile = out_folder_results_cmp + 'merged_boxplots.png', xrotation = 45)
+    histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=bins, color = None, outfile = out_folder_results_cmp + 'merged_histograms_line.png')
+    histogram(temp[0], log=True, labels = temp[1], histtype='stepfilled', bins=bins, color = None, outfile = out_folder_results_cmp + 'merged_histograms_filled.png')
+    histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=256, color = None, outfile = out_folder_results_cmp + 'merged_histograms_density.png', density=True)
 
     # PAIRWISE INTER CONDITION - masks - histo + boxplot - single slices
     for i in range(0,len(data)-1):
@@ -324,25 +360,53 @@ def plot_all(data, conditions, out_folder = '.', condition_labels = None, obj_la
             color2 = ['green'] * len(conditions[j])
             color = color1 + color2
 
-            histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=128, color = color,
-                      outfile = out_folder + '/' + condition_labels[i] + '-' + condition_labels[j] + '_histogram.png')
-            histogram(temp[0], log=True, labels = temp[1], histtype='stepfilled', bins=128, color = color,
-                      outfile = out_folder + '/' + condition_labels[i] + '-' + condition_labels[j] + '_histogram_filled.png')
-            histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=128, color = color,
-                      outfile = out_folder + '/' + condition_labels[i] + '-' + condition_labels[j] + '_histogram_freq.png', freq=True)
+            out_froot = out_folder_results_cmp + condition_labels[i] + '-' + condition_labels[j] + "/"
+            cmpname = condition_labels[i] + '-' + condition_labels[j]
 
-            histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=128, color = color,
-                      outfile = out_folder + '/' + condition_labels[i] + '-' + condition_labels[j] + '_histogram_density.png', density=True)
-            histogram(temp[0], log=True, labels = temp[1], histtype='stepfilled', bins=128, color = color,
-                      outfile = out_folder + '/' + condition_labels[i] + '-' + condition_labels[j] + '_histogram_filled_density.png', density=True)
-            histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=128, color = color,
-                      outfile = out_folder + '/' + condition_labels[i] + '-' + condition_labels[j] + '_histogram_density_density.png', density=True)
+            if os.path.exists(out_froot):
+                if not os.path.isdir(out_froot):
+                    raise Exception
+            else:
+                os.makedirs(out_froot)
 
+            histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=bins, color = color,
+                      outfile = out_froot + cmpname + '_histogram_line.png')
+            histogram(temp[0], log=True, labels = temp[1], histtype='stepfilled', bins=bins, color = color,
+                      outfile = out_froot + cmpname + '_histogram_filled.png')
+            histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=bins, color = color,
+                      outfile = out_froot + cmpname + '_histogram_freq.png', freq=True)
+            histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=256, color = color,
+                      outfile = out_froot + cmpname + '_histogram_density.png', density=True)
 
-            boxplot(temp[0], labels = temp[1], outfile = out_folder + '/' + condition_labels[i]  + '-' + condition_labels[j] + '_boxplot.png', xrotation = 45)
+            boxplot(temp[0], labels = temp[1], outfile = out_froot + cmpname + '_boxplot.png', xrotation = xrot)
 
+        # SINGLE CONDITION - mask vs all - histo + boxplot - merged slices
+        # for i in range(0,len(data)):
+        # 	temp = select_arrays([data[i]],
+        # 		name = 'slices_intensity', merged = True, what = [0,1],
+        # 		condition_labels = [condition_labels[i]], obj_labels = obj_labels, channel_labels = channel_labels)
+        # 	color = ['green', 'red']*(len(temp[0])/2)
 
-        # SINGLE SLICE - masks and molecule masks - BWplots - single slices
+        # 	out_froot = out_folder_results_single + condition_labels[i] + "/"
+
+        # 	histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=bins, color = color, outfile = out_froot + condition_labels[i] + '_merged_histogram_line.png')
+        # 	histogram(temp[0], log=True, labels = temp[1], histtype='stepfilled', bins=bins, color = color, outfile = out_froot + condition_labels[i] + '_merged_histogram_filled.png')
+        # 	histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=256, color = color, outfile = out_froot + condition_labels[i] + '_merged_histogram_density.png', density=True)
+        # 	boxplot(temp[0], labels = temp[1], outfile = out_froot + condition_labels[i] + '_merged_boxplot.png', xrotation = xrot)
+
+        # SINGLE CONDITION - mask vs all - histo + boxplot - single slices
+    for i in range(0,len(data)):
+        temp = select_arrays([data[i]],
+                             name = 'slices_intensity', merged = False, what = [0,1],
+                             condition_labels = [condition_labels[i]], obj_labels = obj_labels, channel_labels = channel_labels)
+        color = ['green', 'red']*(len(temp[0])/2)
+        out_froot = out_folder_results_single + condition_labels[i] + "/"
+        histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=bins, color = color, outfile = out_froot + condition_labels[i] + '_histogram_line.png')
+        # histogram(temp[0], log=True, labels = temp[1], histtype='stepfilled', bins=bins, color = color, outfile = out_froot + condition_labels[i] + '_histogram_filled.png')
+        histogram(temp[0], log=True, labels = temp[1], histtype='step', bins=256, color = color, outfile = out_froot + condition_labels[i] + '_histogram_density.png', density=True)
+        boxplot(temp[0], labels = temp[1], outfile = out_froot + condition_labels[i] + '_boxplot.png', xrotation = xrot)
+
+    # SINGLE SLICE - masks and molecule masks - BWplots - single slices
 
     for j in range(0,len(data)):
         mask = select_images([data[j]], name = 'slices_mask', what = [0],
@@ -351,9 +415,9 @@ def plot_all(data, conditions, out_folder = '.', condition_labels = None, obj_la
                                  condition_labels = [condition_labels[j]], obj_labels = obj_labels, channel_labels = channel_labels)
         for i in range(0, len(mask[0])):
             A = mask[0][i].copy()
-            plot(A, out_folder + '/' + mask[1][i] + '_mask.tif')
+            plot(A, out_folder_images + mask[1][i] + '_ROI.png')
             A = molecule[0][i].copy()
-            plot(A, out_folder + '/' + molecule[1][i] + '_mask.tif')
+            plot(A, out_folder_images + molecule[1][i] + '_ROI.png')
 
         # SINGLE SLICE - masks and molecule gray - BWplots - single slices
 
@@ -364,7 +428,7 @@ def plot_all(data, conditions, out_folder = '.', condition_labels = None, obj_la
                                  condition_labels = [condition_labels[j]], obj_labels = obj_labels, channel_labels = channel_labels)
         for i in range(0, len(mask[0])):
             A = mask[0][i].copy()
-            plot(A, out_folder + '/' + mask[1][i] + '_gray.tif')
+            plot(A, out_folder_images + mask[1][i] + '_gray.png')
             A = molecule[0][i].copy()
-            plot(A, out_folder + '/' + molecule[1][i] + '_gray.tif')
+            plot(A, out_folder_images + molecule[1][i] + '_gray.png')
             #

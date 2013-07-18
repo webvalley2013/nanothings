@@ -7,6 +7,7 @@ pytz==2013b
 django-ajaxutils
 requests
 https://github.com/MPBAUnofficial/pyhive/archive/develop.zip
+unipath
 
 # 3d analisys
 # scipy via sys packages

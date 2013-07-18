@@ -47,16 +47,16 @@ Output: ndarray (2 dimensions)
 def select_channel(ndarr, channel = 0):
     temp = ndarr[:,:,channel]
     return(temp)
-    #
+#
 
-    # '''
-    # Load stack of slices (multiple images per slice supported)
-    # Input: list of lists of image filenames
-    # Output: list of lists of ndarrayas (in the same order as input data)
-    # '''
-    # # def loadstack(filenames):
-    # 	temp = []
-    # 	for i in filenames:
-    # 		temp.append(loadslice[i])
-    # 	return(temp)
-    #
+# '''
+# Load stack of slices (multiple images per slice supported)
+# Input: list of lists of image filenames
+# Output: list of lists of ndarrayas (in the same order as input data)
+# '''
+# # def loadstack(filenames):
+# 	temp = []
+# 	for i in filenames:
+# 		temp.append(loadslice[i])
+# 	return(temp)
+#
