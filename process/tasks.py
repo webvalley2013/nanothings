@@ -28,12 +28,8 @@ def add(x, y):
 
 @task()
 def process_int(url_list1, url_list2, url_list3, int1):
-    conn = psycopg2.connect("dbname=wvtestmi user=postgres password=postgres host=192.168.205.10")
-    cur = conn.cursor()
-    cur.execute("select correlation_networks(url_list1, url_list2, url_list3, int1);")
-    res = cur.fetchone()
-
-    return res[0]
+    out = [url_list1, url_list2, url_list3, int1]
+    return out
 
 
 @task()
