@@ -29,5 +29,5 @@ urlpatterns = patterns('userinterface.views',
     url(r'^license/$', 'license'),
     url(r'^img_analysis/$', 'img_analysis'),
     url(r'^r_plr/$', 'r_plr'),
-    url(r'^networks/$', 'networks'),
+    url(r'^hadoop/$', 'hadoop'),
 )
