@@ -89,6 +89,24 @@ body {
 
 .carousel-caption h1{
     color: white;
+    font-size: 60px;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+carousel-caption p {
+   margin-bottom: 10px;
+   font-size: 30px;
+  font-weight: 200;
+  line-height: 1.25;
+}
+
+.carousel-caption {
+ width: 65%;
+margin-top: 100px;
+margin-bottom: 210px;
+margin-left: 60px;
+
 }
 
 .carousel slide {
@@ -99,9 +117,7 @@ body {
     border-radius: 20px;
 }
 
-.carousel-caption h1 {
-    color: white;
-}
+
 
 .carousel-fade .carousel-inner .item {
   opacity: 0;
@@ -134,4 +150,17 @@ body {
 .thumbnails {
     margin: 0 auto;
     width: 95%;
+}
+
+.intro2 {
+text-align: center;
+color: white;
+}
+
+.intro2 h1 {
+margin: 60px 0 10px;
+font-size: 60px;
+font-weight: 200;
+line-height: 1;
+letter-spacing: -1px;
 }
