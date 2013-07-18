@@ -12,6 +12,8 @@
 #
 #     You should have received a copy of the GNU Affero GPL
 #     along with nanothings.  If not, see <http://www.gnu.org/licenses/>.
+
+# MODULES
 from django.conf.urls import patterns, url
 
 urlpatterns = patterns('userinterface.views',

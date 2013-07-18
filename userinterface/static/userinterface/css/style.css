@@ -1,3 +1,19 @@
+/*    This file is part of nanothings.
+#
+#     nanothings is free software: you can redistribute it and/or modify
+#     it under the terms of the GNU Affero GPL as published by
+#     the Free Software Foundation, either version 3 of the License, or
+#     (at your option) any later version.
+#
+#     nanothings is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU Affero GPL for more details.
+#
+#     You should have received a copy of the GNU Affero GPL
+#     along with nanothings.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 body {
     background-color: #fff;
     padding-bottom: 50px;
@@ -18,8 +34,8 @@ body {
     font-weight: 200;
     line-height: 30px;
 
-    background-color: #999999;
-    box-shadow: 0.3px 3px 3px #777;
+    background-color: #c1c1c1;
+    box-shadow: 0.3px 3px 6px #343434;
     border-radius: 10px;
 }
 
@@ -33,18 +49,6 @@ body {
 
 .content {
     padding: 50px;
-}
-
-.carousel slide {
-    padding: 50px;
-}
-
-.carousel-inner {
-    border-radius: 20px;
-}
-
-.carousel-caption h1{
-    color: white;
 }
 
 .logo-about {
@@ -79,8 +83,82 @@ body {
 
 .carousel-caption h1{
     color: white;
+    font-size: 60px;
+    line-height: 1;
+    letter-spacing: -2px;
 }
 
-.caption h3 , .caption p , #txtAbout, #title, #nome, #txtContacts , #titleR , #txtR, #titleNet,  #txtNet , #titleImg , #txtImg  {
+carousel-caption p {
+   margin-bottom: 10px;
+   font-size: 30px;
+  font-weight: 200;
+  line-height: 1.25;
+}
+
+.carousel-caption {
+ width: 65%;
+margin-top: 100px;
+margin-bottom: 210px;
+margin-left: 60px;
+
+}
+
+.carousel .slide {
+    padding: 50px;
+}
+
+.carousel-inner {
+    border-radius: 20px;
+}
+
+.carousel-fade .carousel-inner .item {
+  opacity: 0;
+  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;
+}
+
+.carousel-fade .carousel-inner .active {
+  opacity: 1;
+}
+
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+  left: 0;
+  opacity: 0;
+  z-index: 1;
+}
+
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right {
+  opacity: 1;
+}
+
+.carousel-fade .carousel-control {
+  z-index: 2;
+}
+
+.thumbnails {
+    margin: 0 auto;
+    width: 95%;
+}
+
+.intro2 {
+    text-align: center;
     color: white;
+}
+
+.intro2 h1 {
+    margin: 60px 0 10px;
+    font-size: 60px;
+    font-weight: 200;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.thumbnail .caption { color: #333; }
+
+.container {
+    color: #333;
 }

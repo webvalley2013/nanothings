@@ -1,17 +1,20 @@
-{#This file is part of nanothings.#}
-{##}
-{#    nanothings is free software: you can redistribute it and/or modify#}
-{#    it under the terms of the GNU Affero GPL as published by#}
-{#    the Free Software Foundation, either version 3 of the License, or#}
-{#    (at your option) any later version.#}
-{##}
-{#    Foobar is distributed in the hope that it will be useful,#}
-{#    but WITHOUT ANY WARRANTY; without even the implied warranty of#}
-{#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the#}
-{#    GNU Affero GPL for more details.#}
-{##}
-{#    You should have received a copy of the GNU Affero GPL#}
-{#    along with nanothings.  If not, see <http://www.gnu.org/licenses/>.#}
+{# ######################################################################### #}
+{#    This file is part of nanothings.                                       #}
+{#                                                                           #}
+{#    nanothings is free software: you can redistribute it and/or modify     #}
+{#    it under the terms of the GNU Affero GPL as published by               #}
+{#    the Free Software Foundation, either version 3 of the License, or      #}
+{#    (at your option) any later version.                                    #}
+{#                                                                           #}
+{#    nanothings is distributed in the hope that it will be useful,          #}
+{#    but WITHOUT ANY WARRANTY; without even the implied warranty of         #}
+{#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          #}
+{#    GNU Affero GPL for more details.                                       #}
+{#                                                                           #}
+{#    You should have received a copy of the GNU Affero GPL                  #}
+{#    along with nanothings.  If not, see <http://www.gnu.org/licenses/>.    #}
+{# ######################################################################### #}
+
 {% load staticfiles %}
 <!DOCTYPE html>
 
@@ -65,8 +68,8 @@
                                 <li id=networks><a href="/ui/networks/">Networks</a></li>
                             </ul>
                         </li>
-                        <li><a href="/ui/api_documentation">API documentation</a></li>
-                        <li><a href="/ui/license">License</a></li>
+                        <li id=api><a href="/ui/api_documentation">API documentation</a></li>
+                        <li id=license><a href="/ui/license">License</a></li>
                         {% if user.is_superuser %}
                             <li><a href="/ui/process_list">Process Management</a></li>
                         {% endif %}
@@ -148,15 +151,15 @@
             <div class="row-fluid main-section">
                 <div class="span12 content">
                     {% block intro-section-content %}
-                        <div id="myCarousel" class="carousel slide">
+                        <div id="myCarousel" class="carousel slide carousel-fade">
                             <div class="carousel-inner">
                                 <div class="item active" id="ed-base">
+
                                     <div class="carousel-caption">
                                         <h1>3D NanoWebGIS </h1>
 
                                         <p>
-                                            3D nanoWebGIS interface and complex networks for molecular
-                                            medicine data.
+                                            web tool for studying change in cells.
                                         </p>
                                     </div>
                                     <img src="{% static "userinterface/img/bg/01.jpg" %}" alt=""/>
@@ -167,7 +170,7 @@
                                         <h1>3D NanoWebGIS</h1>
 
                                         <p>
-                                            3D nanoWebGIS interface and complex networks for molecular
+                                            Interface and complex networks for molecular
                                             medicine data.
                                         </p>
                                     </div>
@@ -179,7 +182,7 @@
                                         <h1>3D NanoWebGIS</h1>
 
                                         <p>
-                                            3D nanoWebGIS interface and complex networks for molecular
+                                            Interface and complex networks for molecular
                                             medicine data.
                                         </p>
                                     </div>
@@ -191,7 +194,7 @@
                                         <h1>
                                             3D NanoWebGIS</h1>
 
-                                        <p> 3D nanoWebGIS interface and complex networks for molecular
+                                        <p> Interface and complex networks for molecular
                                             medicine data.</p>
                                     </div>
                                     <img src="{% static "userinterface/img/bg/04.jpg" %}" alt="">
@@ -203,7 +206,7 @@
                                         <h1>
                                             3D NanoWebGIS</h1>
 
-                                        <p> 3D nanoWebGIS interface and complex networks for molecular
+                                        <p> Interface and complex networks for molecular
                                             medicine data.</p>
                                     </div>
                                     <img src="{% static "userinterface/img/bg/05.jpg" %}" alt="">
@@ -215,7 +218,7 @@
                                         <h1>
                                             3D NanoWebGIS</h1>
 
-                                        <p> 3D nanoWebGIS interface and complex networks for molecular
+                                        <p> Interface and complex networks for molecular
                                             medicine data.</p>
                                     </div>
                                     <img src="{% static "userinterface/img/bg/06.jpg" %}" alt="">
@@ -225,7 +228,7 @@
                             <a class="carousel-control right" href="#myCarousel" data-slide="next">›</a>
                             <script>
                                 $('.carousel').carousel({
-                                    interval: 3000
+                                    interval: 5000
                                 })
                             </script>
                         </div>
@@ -233,71 +236,76 @@
                 </div>
                 <!-- END: INTRO SECTION -->
 
+
                 <!-- THUMBNAILS -->
                 {% block thumbnails %}
+
                     <div class="span12">
-                        <ul class="thumbnails">
-                            <li class="span4">
-                                <div class="thumbnail">
+                        <div class="intro2">
+                            <h1>Introduzione</h1>
+                            <ul class="thumbnails">
+                                <li class="span4">
+                                    <div class="thumbnail">
 
-                                    <!--  <img alt="300x200" src="http://lorempixel.com/600/200/city">-->
-                                    <img class="img-circle" data-src="holder.js/140x140" alt=""
-                                         style="width: 140px; height: 140px;"
-                                         src="{% static "userinterface/img/bg/05.jpg" %}">
+                                        <!--  <img alt="300x200" src="http://lorempixel.com/600/200/city">-->
+                                        <img class="img-circle" data-src="holder.js/140x140" alt=""
+                                             style="width: 140px; height: 140px;"
+                                             src="{% static "userinterface/img/bg/05.jpg" %}">
 
-                                    <div class="caption">
+                                        <div class="caption">
 
-                                        <h3>
-                                            User Friendly
-                                        </h3>
+                                            <h3>
+                                                User Friendly
+                                            </h3>
 
-                                        <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/>
-                                            Aenean commodo ligula eget dolor.<br/>
-                                            Aenean massa.
-                                        </p>
+                                            <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/>
+                                                Aenean commodo ligula eget dolor.<br/>
+                                                Aenean massa.
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="span4">
-                                <div class="thumbnail">
-                                    <!--  <img alt="300x200" src="http://lorempixel.com/600/200/city">-->
+                                </li>
+                                <li class="span4">
+                                    <div class="thumbnail">
+                                        <!--  <img alt="300x200" src="http://lorempixel.com/600/200/city">-->
 
-                                    <img class="img-circle" data-src="holder.js/140x140" alt=""
-                                         style="width: 140px; height: 140px;"
-                                         src="{% static "userinterface/img/bg/03.jpg" %}">
+                                        <img class="img-circle" data-src="holder.js/140x140" alt=""
+                                             style="width: 140px; height: 140px;"
+                                             src="{% static "userinterface/img/bg/03.jpg" %}">
 
-                                    <div class="caption">
-                                        <h3>
-                                            New analysis methods
-                                        </h3>
+                                        <div class="caption">
+                                            <h3>
+                                                New analysis methods
+                                            </h3>
 
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. <br/>
-                                            Aenean commodo ligula eget dolor.<br/>
-                                            Aenean massa.
-                                        </p>
+                                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. <br/>
+                                                Aenean commodo ligula eget dolor.<br/>
+                                                Aenean massa.
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="span4">
-                                <div class="thumbnail">
-                                    <!--  <img alt="300x200" src="http://lorempixel.com/600/200/sports">-->
-                                    <img class="img-circle" data-src="holder.js/140x140" alt=""
-                                         style="width: 140px; height: 140px;"
-                                         src="{% static "userinterface/img/bg/01.jpg" %}">
+                                </li>
+                                <li class="span4">
+                                    <div class="thumbnail">
+                                        <!--  <img alt="300x200" src="http://lorempixel.com/600/200/sports">-->
+                                        <img class="img-circle" data-src="holder.js/140x140" alt=""
+                                             style="width: 140px; height: 140px;"
+                                             src="{% static "userinterface/img/bg/01.jpg" %}">
 
-                                    <div class="caption">
-                                        <h3>
-                                            Images in 3D
-                                        </h3>
+                                        <div class="caption">
+                                            <h3>
+                                                Images in 3D
+                                            </h3>
 
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/>
-                                            Aenean commodo ligula eget dolor. <br/>
-                                            Aenean massa.
-                                        </p>
+                                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br/>
+                                                Aenean commodo ligula eget dolor. <br/>
+                                                Aenean massa.
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     </div>
                 {% endblock %}
