@@ -52,7 +52,7 @@
         <li><strong>Managed</strong> and <strong>measured</strong></li>
         <li>Great developer <strong>support</strong></li>
     </ul>
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <td>Status code</td>
@@ -89,16 +89,9 @@
             </tbody>
         </table>
 
-        <h4>Formats and representations:</h4>
-
-        <p>A format specifies how a particular resource should be represented. A format is used:</p>
-        <ul>
-            <li>In an operation to specify what representation should be returned to the client</li>
-            <li>In a POST or PUT operation to specify the representation being sent to the server</li>
-        </ul>
-
+        <h4 class="subtitle">Formats and representations:</h4>
         <p>The following table defines the Content-type values for each format:</p>
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <td>Format</td>
@@ -111,8 +104,8 @@
                     <td>application/xml</td>
                 </tr>
                 <tr>
-                    <td>JSON</td>
-                    <td>application/json</td>
+                    <td><strong>JSON</strong></td>
+                    <td><strong>application/json</strong></td>
                 </tr>
                 <tr>
                     <td>HTML</td>
@@ -127,13 +120,14 @@
 
         <p>To communicate data we've used the JSON (JavaScript Object Notation) format.</p>
 
-        <h3>Processes:</h3>
+        <h3 class="subtitle">Processes:</h3>
         <p>We've provided a way to visualize and manage the processes invoked.</p>
 
+        <h4>Process list</h4>
         <code>/process/list/</code><br />
         <code>From terminal: curl -X GET http://localhost:8000/process/list/</code>
 
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <td>Action</td>
@@ -172,11 +166,11 @@
             }]
         </code>
 
-
+        <h4 class="subtitle">Process run (a task)</h4>
         <code>/process/run/&ltprocess_code&gt/&ltprocess_id&gt/</code><br />
         <code>From terminal: curl -X GET http://localhost:8000//process/run/&ltprocess_code&gt/&ltprocess_id&gt</code>
 
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <td>Action</td>
@@ -203,12 +197,13 @@
                 "polling_url": "/process/status/n_id",
                 "success": &ltboolean_value&gt
             }
-        </code>
+        </code><br />
 
+        <h4 class="subtitle">Process status</h4>
         <code>/process/status/&ltprocess_id&gt/</code><br />
         <code>From terminal: curl -X GET http://localhost:8000/process/status/&ltprocess_id&gt/</code>
 
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <td>Action</td>
@@ -227,10 +222,11 @@
             </tbody>
         </table>
 
+        <h4 class="subtitle">Process details</h4>
         <code>/process/detail/&ltprocess_id&gt/</code><br />
         <code>From terminal: curl -X GET http://localhost:8000/process/detail/&ltprocess_id&gt/</code>
 
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <td>Action</td>
@@ -249,11 +245,11 @@
             </tbody>
         </table>
 
-        <h4>From terminal:</h4>
+        <h4 class="subtitle">Example:</h4>
 
-        <p>e.g:</p>
-
-        <code>curl -X POST http://localhost:8000/process/run/process/3d/&ltp_id&gt -d '&ltconditions_inputs&gt&conditions_labels=NT,2hLPS500&mask_label=mask&molecule_label=molecule'</code>
+        <code>
+            curl -X POST http://localhost:8000/process/run/process/3d/&ltp_id&gt -d '&ltconditions_inputs&gt&conditions_labels=NT,2hLPS500&mask_label=mask&molecule_label=molecule'
+        </code>
 
         <!--<conditions_inputs> nucleus1=http://192.168.205.138:8080/NT/01_nucleus.tif||http://192.168.205.138:8080/NT/02_nucleus.tif||http://192.168.205.138:8080/NT/03_nucleus.tif||http://192.168.205.138:8080/NT/04_nucleus.tif&nucleus2=http://192.168.205.138:8080/2hLPS500/01_nucleus.tif||http://192.168.205.138:8080/2hLPS500/02_nucleus.tif||http://192.168.205.138:8080/2hLPS500/03_nucleus.tif||http://192.168.205.138:8080/2hLPS500/04_nucleus.tif&litaf1=http://192.168.205.138:8080/NT/01_LITAF.tif||http://192.168.205.138:8080/NT/02_LITAF.tif||http://192.168.205.138:8080/NT/03_LITAF.tif||http://192.168.205.138:8080/NT/04_LITAF.tif&litaf2=http://192.168.205.138:8080/2hLPS500/01_LITAF.tif||http://192.168.205.138:8080/2hLPS500/02_LITAF.tif||http://192.168.205.138:8080/2hLPS500/03_LITAF.tif||http://192.168.205.138:8080/2hLPS500/04_LITAF.tif-->
 
