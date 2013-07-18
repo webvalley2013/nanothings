@@ -15,3 +15,6 @@ matplotlib
 mahotas
 # PIL
 # Install these system wide an symlink here
+
+# hadapi
+fabric

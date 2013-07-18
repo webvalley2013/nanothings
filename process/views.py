@@ -109,9 +109,8 @@ def run_process_3d(request, p_id):
         else:
 
             # Save running process to db
-            process_fk = Process.objects.get(code="3dprova")
             p = RunningProcess()
-            p.process_type = process_fk  # (3d, hadoop, R/PLR, ...)
+            p.process_type = proc  # (3d, hadoop, R/PLR, ...)
             p.task_id = task.id
             p.started = datetime.datetime.now()
             p.inputs = json.dumps(parameters)
@@ -213,6 +212,57 @@ def run_test_plr(request, p_id):
         # else:
 
             # Save running process to db
+        p = RunningProcess()
+        p.process_type = proc  # (3d, hadoop, R/PLR, ...)
+        p.task_id = task.id
+        p.started = datetime.datetime.now()
+        p.inputs = json.dumps(parameters)
+        p.save() # Save the running process to the DB
+
+        # Return response to the client.
+        return {
+            'success': True,
+            'polling_url': '/process/status/' + str(p.pk)
+        }
+
+    else:
+        return {
+                   'success': False,
+                   'message': 'input parameters were invalid'
+               }, 400
+
+
+@ajax()
+@csrf_exempt
+def run_test_hadoop(request, p_id):
+    try:
+        proc = Process.objects.get(pk=p_id)
+    except Process.DoesNotExist:
+        return {'success': False,
+                'message': 'process with id {0} does not exists'.format(p_id)}, 400
+
+    if proc.type != 'hadoop':
+        return {'success': False,
+                'message': 'process with id {0} is not a 3d analisys'.format(p_id)}, 400
+
+    # If the parameters are correct:
+    ProcessForm = FormFactory(proc).build_form()
+    form = ProcessForm(request.POST)
+    if form.is_valid():
+        parameters = form.save()
+        from .tasks import process_hadoop
+
+        # Add task to broker code
+        # try:
+        task = process_hadoop.delay(parameters["input1"], parameters["input2"], parameters["input3"])
+        # except Exception as e:
+        #     return {
+        #                'success': False,
+        #                'message': 'Internal server error ' + e.message
+        #            }, 500
+        # else:
+
+        # Save running process to db
         p = RunningProcess()
         p.process_type = proc  # (3d, hadoop, R/PLR, ...)
         p.task_id = task.id

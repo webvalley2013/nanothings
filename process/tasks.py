@@ -42,7 +42,8 @@ def minus(x, y):
 
 @task()
 def run_3d_analisys(cond, outpath, conditions_labels, mask_label, molecule_label):
-    main2d.test1(cond, outpath, conditions_labels, mask_label, molecule_label)
+    main2d.main_api(cond, outpath, conditions_labels, mask_label, molecule_label,mask_index = 0, molecule_index = 1, mask_channel = None, molecule_channel = None,
+                 mask_otsu = True, mask_fillholes = True, molecule_otsu = False, molecule_fillholes = False)
     return DEFAULT_HTTP_OUTPUT + "&path=/" + outpath
 
 # parameters["url_pathways"], parameters["url_data"], parameters["sel_pathways"], parameters["thr"]
@@ -67,3 +68,12 @@ def process_plr(url_pathways, url_data, sel_pathways, thr):
     res = cur.fetchone()
 
     return res[0]
+
+
+@task()
+def process_hadoop(int1, int2, int3):
+
+    import time
+    time.sleep(15)
+
+    return "OK"
