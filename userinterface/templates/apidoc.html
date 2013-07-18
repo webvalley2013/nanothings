@@ -38,22 +38,223 @@
 
 
 {% block intro-section-content %}
-    <h1 id=titleApi>API documentation</h1>
-    <p id=txtApi>
-     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-        Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. <br/>
-        Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
-        Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a,
-        venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. <br/>
-        Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
-        consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. <br/>
-        Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
-        Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. <br/>
-        Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero,
-        sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.<br/>
-        Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. <br/>
-        Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales
-        sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,
+    <h1>API documentation</h1>
+    <h3>Introduction:</h3>
+    <p>
+        We provide a RESTful API interface through which clients can configure an instance using simple HTTP calls.<br />
+        REST is an acronym for “REpresentational State Transfer”.
+        <table>
+            <thead>
+                <tr>
+                    <td>Status code</td>
+                    <td>Description</td>
+                    <td>Notes</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>200</td>
+                    <td>OK</td>
+                    <td>The request was successful</td>
+                </tr>
+                <tr>
+                    <td>403</td>
+                    <td>Forbidden</td>
+                    <td>Often denotes a permissions mismatch</td>
+                </tr>
+                <tr>
+                    <td>404</td>
+                    <td>Not Found</td>
+                    <td>Endpoint or resource was not at the indicated location</td>
+                </tr>
+                <tr>
+                    <td>405</td>
+                    <td>Method Not Allowed</td>
+                    <td>Often denotes an endpoint accessed with an incorrect operation (for example, a GET request where a PUT/POST is indicated)</td>
+                </tr>
+                <tr>
+                    <td>500</td>
+                    <td>Internal Server Error</td>
+                    <td>Often denotes a syntax error in the request</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Formats and representations:</h4>
+
+        <p>A format specifies how a particular resource should be represented. A format is used:</p>
+        <ul>
+            <li>In an operation to specify what representation should be returned to the client</li>
+            <li>In a POST or PUT operation to specify the representation being sent to the server</li>
+        </ul>
+
+        <p>The following table defines the Content-type values for each format:</p>
+        <table>
+            <thead>
+                <tr>
+                    <td>Format</td>
+                    <td>Content-type</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>XML</td>
+                    <td>application/xml</td>
+                </tr>
+                <tr>
+                    <td>JSON</td>
+                    <td>application/json</td>
+                </tr>
+                <tr>
+                    <td>HTML</td>
+                    <td>application/html</td>
+                </tr>
+                <tr>
+                    <td>SLD</td>
+                    <td>application/vnd.ogc.sld+xml</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>To communicate data we've used the JSON (JavaScript Object Notation) format.</p>
+
+        <h3>Processes:</h3>
+        <p>We've provided a way to visualize and manage the processes invoked.</p>
+
+        <code>/process/list/</code><br />
+        <code>From terminal: curl -X GET http://localhost:8000/process/list/</code>
+
+        <table>
+            <thead>
+                <tr>
+                    <td>Action</td>
+                    <td>Status code</td>
+                    <td>Format</td>
+                    <td>Parameters</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lists all the available processes</td>
+                    <td>200</td>
+                    <td>JSON</td>
+                    <td>None</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            Returned JSON (e.g.):
+        </p>
+        <code>
+            [{
+	            "code": "process_test",
+	            "description": "This is a description",
+	            "author": "Jack",
+	            "type": "process_type",
+	            "id": 1
+            },
+            {
+	            "code": "process_test1",
+	            "description": "Desc",
+	            "author": "Bob",
+	            "type": "process_type",
+	            "id": 2
+            }]
+        </code>
+
+
+        <code>/process/run/&ltprocess_code&gt/&ltprocess_id&gt/</code><br />
+        <code>From terminal: curl -X GET http://localhost:8000//process/run/&ltprocess_code&gt/&ltprocess_id&gt</code>
+
+        <table>
+            <thead>
+                <tr>
+                    <td>Action</td>
+                    <td>Status code</td>
+                    <td>Format</td>
+                    <td>Parameters</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Runs the specified process with the specified inputs</td>
+                    <td>200</td>
+                    <td>JSON</td>
+                    <td>Inputs required for the task</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            Returned JSON (e.g.):
+        </p>
+        <code>
+            {
+                "polling_url": "/process/status/n_id",
+                "success": &ltboolean_value&gt
+            }
+        </code>
+
+        <code>/process/status/&ltprocess_id&gt/</code><br />
+        <code>From terminal: curl -X GET http://localhost:8000/process/status/&ltprocess_id&gt/</code>
+
+        <table>
+            <thead>
+                <tr>
+                    <td>Action</td>
+                    <td>Status code</td>
+                    <td>Format</td>
+                    <td>Parameters</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Displays the status of the specified process</td>
+                    <td>200</td>
+                    <td>JSON</td>
+                    <td>The id of the process</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <code>/process/detail/&ltprocess_id&gt/</code><br />
+        <code>From terminal: curl -X GET http://localhost:8000/process/detail/&ltprocess_id&gt/</code>
+
+        <table>
+            <thead>
+                <tr>
+                    <td>Action</td>
+                    <td>Status code</td>
+                    <td>Format</td>
+                    <td>Parameters</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Displays the details of a given process</td>
+                    <td>200</td>
+                    <td>JSON</td>
+                    <td>The id of the process</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>From terminal:</h4>
+
+        <p>e.g:</p>
+
+        <code>curl -X POST http://localhost:8000/process/run/process/3d/&ltp_id&gt -d '&ltconditions_inputs&gt&conditions_labels=NT,2hLPS500&mask_label=mask&molecule_label=molecule'</code>
+
+        <!--<conditions_inputs> nucleus1=http://192.168.205.138:8080/NT/01_nucleus.tif||http://192.168.205.138:8080/NT/02_nucleus.tif||http://192.168.205.138:8080/NT/03_nucleus.tif||http://192.168.205.138:8080/NT/04_nucleus.tif&nucleus2=http://192.168.205.138:8080/2hLPS500/01_nucleus.tif||http://192.168.205.138:8080/2hLPS500/02_nucleus.tif||http://192.168.205.138:8080/2hLPS500/03_nucleus.tif||http://192.168.205.138:8080/2hLPS500/04_nucleus.tif&litaf1=http://192.168.205.138:8080/NT/01_LITAF.tif||http://192.168.205.138:8080/NT/02_LITAF.tif||http://192.168.205.138:8080/NT/03_LITAF.tif||http://192.168.205.138:8080/NT/04_LITAF.tif&litaf2=http://192.168.205.138:8080/2hLPS500/01_LITAF.tif||http://192.168.205.138:8080/2hLPS500/02_LITAF.tif||http://192.168.205.138:8080/2hLPS500/03_LITAF.tif||http://192.168.205.138:8080/2hLPS500/04_LITAF.tif-->
+
+        <p>Return value:</p>
+        <code>
+            {
+                "polling_url": "/process/status/&ltp_id&gt",
+                "success": &ltboolean_value&gt
+            }
+        </code>
     </p>
     {% block thumbnails %}{% endblock %}
 {% endblock %}

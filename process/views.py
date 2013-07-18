@@ -181,7 +181,7 @@ def run_test_int(request, p_id):
 @ajax()
 def status(request, pk):
     pr = RunningProcess.objects.get(id=pk)
-
+    
     response = {
         'finished': pr.finished,
         'status': pr.status

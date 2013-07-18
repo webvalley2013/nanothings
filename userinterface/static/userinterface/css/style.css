@@ -34,8 +34,8 @@ body {
     font-weight: 200;
     line-height: 30px;
 
-    background-color: #999999;
-    box-shadow: 0.3px 3px 3px #777;
+    background-color: #c1c1c1;
+    box-shadow: 0.3px 3px 6px #343434;
     border-radius: 10px;
 }
 
@@ -81,12 +81,6 @@ body {
     margin-right: auto;
 }
 
-.caption h3 , .caption p , #txtAbout, #title, #nome, #txtContacts ,
-#titleR , #txtR, #titleNet,  #txtNet , #titleImg , #txtImg , #titleLicense, #txtLicense,
-#titleApi, #txtApi {
-    color: white;
-}
-
 .carousel-caption h1{
     color: white;
     font-size: 60px;
@@ -109,15 +103,13 @@ margin-left: 60px;
 
 }
 
-.carousel slide {
+.carousel .slide {
     padding: 50px;
 }
 
 .carousel-inner {
     border-radius: 20px;
 }
-
-
 
 .carousel-fade .carousel-inner .item {
   opacity: 0;
@@ -153,14 +145,20 @@ margin-left: 60px;
 }
 
 .intro2 {
-text-align: center;
-color: white;
+    text-align: center;
+    color: white;
 }
 
 .intro2 h1 {
-margin: 60px 0 10px;
-font-size: 60px;
-font-weight: 200;
-line-height: 1;
-letter-spacing: -1px;
+    margin: 60px 0 10px;
+    font-size: 60px;
+    font-weight: 200;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.thumbnail .caption { color: #333; }
+
+.container {
+    color: #333;
 }
