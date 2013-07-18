@@ -1,3 +1,4 @@
+
 # This file is part of nanothings.
 #
 #     nanothings is free software: you can redistribute it and/or modify
@@ -14,9 +15,11 @@
 #     along with nanothings.  If not, see <http://www.gnu.org/licenses/>.
 
 # MODULES
+from django.db.utils import DatabaseError
 from django.views.decorators.csrf import csrf_exempt
 from .models import Process, RunningProcess
 from django.http import HttpResponse
+from django.db import connection, transaction
 from django.shortcuts import render, get_object_or_404
 import json
 import datetime
@@ -170,6 +173,57 @@ def run_test_int(request, p_id):
                 'success': True,
                 'polling_url': '/process/status/' + str(p.pk)
             }
+
+    else:
+        return {
+                   'success': False,
+                   'message': 'input parameters were invalid'
+               }, 400
+
+
+@ajax()
+@csrf_exempt
+def run_test_plr(request, p_id):
+    try:
+        proc = Process.objects.get(pk=p_id)
+    except Process.DoesNotExist:
+        return {'success': False,
+                'message': 'process with id {0} does not exists'.format(p_id)}, 400
+
+    if proc.type != 'plr':
+        return {'success': False,
+                'message': 'process with id {0} is not a 3d analisys'.format(p_id)}, 400
+
+    # If the parameters are correct:
+    ProcessForm = FormFactory(proc).build_form()
+    form = ProcessForm(request.POST)
+    if form.is_valid():
+        parameters = form.save()
+        from .tasks import process_plr
+
+        # Add task to broker code
+        # try:
+        task = process_plr.delay(parameters["url_pathways"], parameters["url_data"], parameters["sel_pathways"], parameters["thr"])
+        # except Exception as e:
+        #     return {
+        #                'success': False,
+        #                'message': 'Internal server error ' + e.message
+        #            }, 500
+        # else:
+
+            # Save running process to db
+        p = RunningProcess()
+        p.process_type = proc  # (3d, hadoop, R/PLR, ...)
+        p.task_id = task.id
+        p.started = datetime.datetime.now()
+        p.inputs = json.dumps(parameters)
+        p.save() # Save the running process to the DB
+
+        # Return response to the client.
+        return {
+            'success': True,
+            'polling_url': '/process/status/' + str(p.pk)
+        }
 
     else:
         return {
