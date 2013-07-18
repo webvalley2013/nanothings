@@ -40,20 +40,26 @@ def histogram(data, labels = None, outfile = None, log=False, histtype='stepfill
         plt.clf()
         for i in range(0,len(data)):
             if color == None:
-                dataf = data[i].astype(np.float32)
-                density = gaussian_kde(dataf)
-                xs = np.linspace(xminim,xmaxim,bins)
-                density.covariance_factor = lambda : .25
-                density._compute_covariance()
-                plt.plot(xs,density(xs), label = labels[i])
+                try:
+                    dataf = data[i].astype(np.float32)
+                    density = gaussian_kde(dataf)
+                    xs = np.linspace(xminim,xmaxim,bins)
+                    density.covariance_factor = lambda : .25
+                    density._compute_covariance()
+                    plt.plot(xs,density(xs), label = labels[i])
+                except Exception:
+                    pass
             # plt.hist(data[i], bins=bins, alpha=0.5, label = labels[i], log=log, histtype=histtype)
             else:
-                dataf = data[i].astype(np.float32)
-                density = gaussian_kde(dataf)
-                xs = np.linspace(xminim,xmaxim,bins)
-                density.covariance_factor = lambda : .25
-                density._compute_covariance()
-                plt.plot(xs,density(xs), label = labels[i], color = color[i])
+                try:
+                    dataf = data[i].astype(np.float32)
+                    density = gaussian_kde(dataf)
+                    xs = np.linspace(xminim,xmaxim,bins)
+                    density.covariance_factor = lambda : .25
+                    density._compute_covariance()
+                    plt.plot(xs,density(xs), label = labels[i], color = color[i])
+                except Exception:
+                    pass
         plt.xlabel('Intensity')
         plt.ylabel('Number of occurrences')
         plt.xlim(0, xmaxim)

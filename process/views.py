@@ -84,8 +84,8 @@ def run_process_3d(request, p_id):
             l1 = parameters["litaf1"]
             l2 = parameters["litaf2"]
             cond_lbl = parameters["conditions_labels"]
-            mask_lbl = parameters["mask_label"]
-            molecule_lbl = parameters["molecule_label"]
+            slice_label = parameters["mask_label"]
+            channel_labels = parameters["molecule_label"]
 
             # split and strip
             # Elaboration of inputs
@@ -99,8 +99,8 @@ def run_process_3d(request, p_id):
 
             # Run the analysis
             conditions = [cond1, cond2]
-            task = run_3d_analisys.delay(conditions, outdir, conditions_labels=cond_lbl_list,
-                                         mask_label=mask_lbl, molecule_label=molecule_lbl)
+            task = run_3d_analisys.delay(conditions, outdir, cond_lbl_list,
+                                         slice_label, channel_labels)
         except Exception as e:
             return {
                 'success': False,

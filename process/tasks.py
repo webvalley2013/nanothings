@@ -16,6 +16,7 @@
 # MODULES
 from celery import task
 from .extralib.imageanalisys import main2d
+from .extralib.hadapi.hadapi import hadoopHandler
 from nanothings.settings import DEFAULT_HTTP_OUTPUT
 import psycopg2
 
@@ -41,9 +42,11 @@ def minus(x, y):
 
 
 @task()
-def run_3d_analisys(cond, outpath, conditions_labels, mask_label, molecule_label):
-    main2d.main_api(cond, outpath, conditions_labels, mask_label, molecule_label,mask_index = 0, molecule_index = 1, mask_channel = None, molecule_channel = None,
-                 mask_otsu = True, mask_fillholes = True, molecule_otsu = False, molecule_fillholes = False)
+def run_3d_analisys(cond, outpath, cond_lbl_list, slice_label, channel_labels):
+    main2d.main_api(cond, outpath, cond_lbl_list, None, None, mask_index = 0, molecule_index = 1,
+                    mask_channel= 1, molecule_channel= 0,
+                    mask_otsu= True, mask_fillholes= True, molecule_otsu= False, molecule_fillholes= False)
+
     return DEFAULT_HTTP_OUTPUT + "&path=/" + outpath
 
 # parameters["url_pathways"], parameters["url_data"], parameters["sel_pathways"], parameters["thr"]
@@ -72,8 +75,7 @@ def process_plr(url_pathways, url_data, sel_pathways, thr):
 
 @task()
 def process_hadoop(int1, int2, int3):
-
-    import time
-    time.sleep(15)
+    hd = hadoopHandler("pc05","userhadoop","user")
+    hd.pheno_run("~/input12.txt","~/output12")
 
     return "OK"

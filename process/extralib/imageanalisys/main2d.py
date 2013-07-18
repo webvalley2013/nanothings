@@ -31,6 +31,8 @@ def main_api(conditions, out_folder, condition_labels = None, slice_labels = Non
           ):
     global out
 
+    print conditions
+
     if not exists(out_folder):
         mkdir(out_folder)
 
