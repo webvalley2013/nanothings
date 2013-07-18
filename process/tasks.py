@@ -70,9 +70,3 @@ def process_plr(url_pathways, url_data, sel_pathways, thr):
     res = cur.fetchone()
 
     return res[0]
-
-
-
-
-
-
