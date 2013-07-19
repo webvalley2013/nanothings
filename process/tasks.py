@@ -14,10 +14,14 @@
 #     along with nanothings.  If not, see <http://www.gnu.org/licenses/>.
 
 # MODULES
+import psycopg2
+from unipath import Path
 from celery import task
 from .extralib.imageanalisys import main2d
+from .extralib.hadapi.hadapi import hadoopHandler
 from nanothings.settings import DEFAULT_HTTP_OUTPUT
-import psycopg2
+
+
 
 @task()
 def add(x, y):
@@ -40,9 +44,13 @@ def minus(x, y):
 
 
 @task()
-def run_3d_analisys(cond, outpath, conditions_labels, mask_label, molecule_label):
-    main2d.test1(cond, outpath, conditions_labels, mask_label, molecule_label)
-    return DEFAULT_HTTP_OUTPUT + "&path=/" + outpath
+def run_3d_analisys(conditions, outdir, cond_lbl_list,slice_label, chan_lbl_list,mask_index, molecule_index,mask_channel, molecule_channel):
+    main2d.main_api(conditions, outdir, cond_lbl_list, slice_label, chan_lbl_list, mask_index, molecule_index,
+                    mask_channel, molecule_channel,
+                    mask_otsu= True, mask_fillholes= True, molecule_otsu= False, molecule_fillholes= False, single_object_analysis = False)
+
+    dir = str(Path(outdir).name)
+    return DEFAULT_HTTP_OUTPUT + "&path=/" + dir
 
 # parameters["url_pathways"], parameters["url_data"], parameters["sel_pathways"], parameters["thr"]
 @task()
@@ -66,3 +74,11 @@ def process_plr(url_pathways, url_data, sel_pathways, thr):
     res = cur.fetchone()
 
     return res[0]
+
+
+@task()
+def process_hadoop(int1, int2, int3):
+    hd = hadoopHandler("pc05","userhadoop","user")
+    hd.pheno_run("~/input12.txt","~/output12")
+
+    return "OK"
