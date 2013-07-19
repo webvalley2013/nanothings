@@ -22,7 +22,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>NanoWebGIS 3D - API documentation</title>
+    <title>Rhadius - API documentation</title>
 </head>
 
 <body>
@@ -38,7 +38,7 @@
 
 
 {% block intro-section-content %}
-    <h1>API documentation</h1>
+    <h1>Rhadius API documentation</h1>
     <h3>Introduction:</h3>
     <p>
         We provide a RESTful API interface through which clients can configure an instance using simple HTTP calls.<br />
@@ -150,20 +150,20 @@
             Returned JSON (e.g.):
         </p>
         <code>
-            [{
-	            "code": "process_test",
-	            "description": "This is a description",
-	            "author": "Jack",
-	            "type": "process_type",
-	            "id": 1
-            },
-            {
-	            "code": "process_test1",
-	            "description": "Desc",
-	            "author": "Bob",
-	            "type": "process_type",
-	            "id": 2
-            }]
+            [{<br />
+	            &nbsp&nbsp&nbsp"code": "process_test",<br />
+	            &nbsp&nbsp&nbsp"description": "This is a description",<br />
+	            &nbsp&nbsp&nbsp"author": "Jack",<br />
+	            &nbsp&nbsp&nbsp"type": "process_type",<br />
+	            &nbsp&nbsp&nbsp"id": 1<br />
+            },<br />
+            {<br />
+	            &nbsp&nbsp&nbsp"code": "process_test1",<br />
+	            &nbsp&nbsp&nbsp"description": "Desc",<br />
+	            &nbsp&nbsp&nbsp"author": "Bob",<br />
+	            &nbsp&nbsp&nbsp"type": "process_type",<br />
+	            &nbsp&nbsp&nbsp"id": 2<br />
+            }]<br />
         </code>
 
         <h4 class="subtitle">Process run (a task)</h4>
@@ -193,9 +193,9 @@
             Returned JSON (e.g.):
         </p>
         <code>
-            {
-                "polling_url": "/process/status/n_id",
-                "success": &ltboolean_value&gt
+            {<br />
+                &nbsp&nbsp&nbsp"polling_url": "/process/status/n_id",<br />
+                &nbsp&nbsp&nbsp"success": &ltboolean_value&gt<br />
             }
         </code><br />
 
@@ -248,18 +248,19 @@
         <h4 class="subtitle">Example:</h4>
 
         <code>
-            curl -X POST http://localhost:8000/process/run/process/3d/&ltp_id&gt -d '&ltconditions_inputs&gt&conditions_labels=NT,2hLPS500&mask_label=mask&molecule_label=molecule'
+            curl -X POST http://localhost:8000/process/run/process/3d/&ltp_id&gt -d <br />
+            '&ltconditions_inputs&gt&conditions_labels=NT,2hLPS500&mask_label=mask&molecule_label=molecule'
         </code>
 
         <!--<conditions_inputs> nucleus1=http://192.168.205.138:8080/NT/01_nucleus.tif||http://192.168.205.138:8080/NT/02_nucleus.tif||http://192.168.205.138:8080/NT/03_nucleus.tif||http://192.168.205.138:8080/NT/04_nucleus.tif&nucleus2=http://192.168.205.138:8080/2hLPS500/01_nucleus.tif||http://192.168.205.138:8080/2hLPS500/02_nucleus.tif||http://192.168.205.138:8080/2hLPS500/03_nucleus.tif||http://192.168.205.138:8080/2hLPS500/04_nucleus.tif&litaf1=http://192.168.205.138:8080/NT/01_LITAF.tif||http://192.168.205.138:8080/NT/02_LITAF.tif||http://192.168.205.138:8080/NT/03_LITAF.tif||http://192.168.205.138:8080/NT/04_LITAF.tif&litaf2=http://192.168.205.138:8080/2hLPS500/01_LITAF.tif||http://192.168.205.138:8080/2hLPS500/02_LITAF.tif||http://192.168.205.138:8080/2hLPS500/03_LITAF.tif||http://192.168.205.138:8080/2hLPS500/04_LITAF.tif-->
 
         <p>Return value:</p>
         <code>
-            {
-                "polling_url": "/process/status/&ltp_id&gt",
-                "success": &ltboolean_value&gt
+            {<br />
+                &nbsp&nbsp&nbsp"polling_url": "/process/status/n_id",<br />
+                &nbsp&nbsp&nbsp"success": &ltboolean_value&gt<br />
             }
-        </code>
+        </code><br />
     </p>
     {% block thumbnails %}{% endblock %}
 {% endblock %}
