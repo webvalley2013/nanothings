@@ -161,9 +161,14 @@ margin-left: 60px;
 .thumbnail .caption { color: #333; }
 
 .container {
-    color: #333;
+    color: #000000;
 }
 
 .subtitle {
     margin: 40px 0 10px 0;
+    color: #
+}
+
+#txtAbout {
+     color: #000000;
 }
