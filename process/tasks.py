@@ -73,7 +73,8 @@ def process_plr(url_pathways, url_data, sel_pathways, thr):
     cur.execute("select correlation_networks('http://192.168.205.138:8080/wang11synergy_pathways.csv','http://192.168.205.138:8080/wang11synergy_data.csv', 4910, 0.9);")
     res = cur.fetchone()
 
-    return res[0]
+    dir = str(Path(res[0]).name)
+    return 'http://192.168.205.10/owncloud/public.php?service=files&t=480d93ee44956ac9e26efc1d3321449e&path=/' + dir
 
 
 @task()
