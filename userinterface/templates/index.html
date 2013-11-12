@@ -56,24 +56,24 @@
             <div class="container-fluid">
                 <div class="nav-collapse collapse navbar-responsive-collapse">
                     <ul class="nav">
-                        <li class="active"><a href="/ui/">Home</a></li>
-                        <li id="about"><a href="/ui/about/">About</a></li>
+                        <li class="active"><a href="/">Home</a></li>
+                        <li id="about"><a href="/about/">About</a></li>
 
                         <li class="dropdown" id=projects>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">Projects<strong
                                     class="caret"></strong></a>
                             <ul class="dropdown-menu">
-                                <li id=img_analysis><a href="/ui/img_analysis/">Image analysis</a></li>
-                                <li id=r_plr><a href="/ui/r_plr/">R/PLR Networks</a></li>
-                                <li id=networks><a href="/ui/hadoop/">Cloud Computing Hadoop</a></li>
-                                <li id=omero><a href="/ui/omero/">Omero</a></li>
+                                <li id=img_analysis><a href="/img_analysis/">Image analysis</a></li>
+                                <li id=r_plr><a href="/r_plr/">R/PLR Networks</a></li>
+                                <li id=networks><a href="/hadoop/">Cloud Computing Hadoop</a></li>
+                                <li id=omero><a href="/omero/">Omero</a></li>
                             </ul>
                         </li>
-                        <li id=api><a href="/ui/api_documentation">API documentation</a></li>
-                        <li id=license><a href="/ui/license">License</a></li>
+                        <li id=api><a href="/api_documentation">API documentation</a></li>
+                        <li id=license><a href="/license">License</a></li>
                         <!--<li id="contacts"><a href="#">Contacts</a></li>-->
                         {% if user.is_superuser %}
-                            <li><a href="/ui/process_list">Process Management</a></li>
+                            <li><a href="/process_list">Process Management</a></li>
                         {% endif %}
                     </ul>
 

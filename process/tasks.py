@@ -70,7 +70,7 @@ def process_plr(url_pathways, url_data, sel_pathways, thr):
     #         "message": str(e)
     #     }
     #     return HttpResponseBadRequest(json.dumps(msg))
-    conn =  psycopg2.connect("dbname=wvtestmi user=postgres password=postgres host=192.168.205.10")
+    conn =  psycopg2.connect("dbname=wvtestmi user=postgres password=postgres host=geopg")
     cur = conn.cursor()
     cur.execute("select correlation_networks('http://192.168.205.138:8080/wang11synergy_pathways.csv','http://192.168.205.138:8080/wang11synergy_data.csv', 4910, 0.9);")
     res = cur.fetchone()

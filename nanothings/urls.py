@@ -22,7 +22,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # App urls
     url(r'^process/', include('process.urls')),
-    url(r'^ui/', include('userinterface.urls')),
+    url(r'^', include('userinterface.urls')),
 
     # Login and logout urls
     (r'^accounts/login/$', 'userinterface.views.login_view'),
