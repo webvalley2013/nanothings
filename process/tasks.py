@@ -31,8 +31,10 @@ def add(x, y):
 
 
 @task()
-def process_int(url_list1, url_list2, url_list3, int1):
-    out = [url_list1, url_list2, url_list3, int1]
+def process_int(url_list1, url_list2, url_list3):
+    import time
+    time.sleep(60)
+    out = [url_list1, url_list2, url_list3]
     return out
 
 

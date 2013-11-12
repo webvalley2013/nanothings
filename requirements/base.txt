@@ -19,3 +19,11 @@ mahotas
 
 # hadapi
 fabric
+
+
+[dbservice@geopg ~]$ sudo /usr/sbin/rabbitmqctl add_user wvcelery wvcelery
+Creating user "wvcelery" ...
+...done.
+[dbservice@geopg ~]$ sudo /usr/sbin/rabbitmqctl add_vhost webvalley
+Creating vhost "webvalley" ...
+...done.

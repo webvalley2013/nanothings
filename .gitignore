@@ -3,3 +3,5 @@
 *.*~
 static/*
 media/*
+.venv
+local_settings.py

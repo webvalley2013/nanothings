@@ -15,7 +15,6 @@
 
 # MODULES
 import djcelery
-
 djcelery.setup_loader()
 
 DEBUG = True
@@ -27,17 +26,6 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'wvtestmi',       # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '192.168.205.10',   # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '5432',             # Set to empty string for default.
-    }
-}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -182,9 +170,20 @@ DEFAULT_OUTPUT_PATH = "/tmp/outputs/"
 DEFAULT_HTTP_OUTPUT = "http://www.blabla.com/dasdasdasds"  # e.g: ownCloud
 
 CELERY_TRACK_STARTED = True
-BROKER_URL = "amqp://guest:guest@localhost:5672//"
 CELERY_IMPORTS = ("process.tasks", )
 #CELERY_RESULT_DBURI = "sqlite:///mydatabase.db"
 CELERY_RESULT_BACKEND = "amqp"
 CELERY_TASK_RESULT_EXPIRES = 18000  # 5 hours.
+
+##################
+# LOCAL SETTINGS #
+##################
+
+# Allow any settings to be defined in local_settings.py which should be
+# ignored in your version control system allowing for settings to be
+# defined per machine.
+try:
+    from local_settings import *
+except ImportError:
+    pass
 
