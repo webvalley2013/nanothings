@@ -320,8 +320,6 @@ def run_test_image(request, p_id):
             path = parameters["nucleus1"]
             mask = parameters["mask_index"]
 
-            print path
-
             task = process_image.delay(path, mask)
 
         except Exception as e:
@@ -392,7 +390,6 @@ def abort(request, task_id):
 
 
 # Returns a JSON with the properties of the given id of the task
-@login_required
 def detail(request, pk):
     pr = Process.objects.get(id=pk)
 
