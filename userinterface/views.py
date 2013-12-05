@@ -14,7 +14,9 @@
 #     along with nanothings.  If not, see <http://www.gnu.org/licenses/>.
 
 # MODULES
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
+from django.template import RequestContext
+from process.formbuilder import FormFactory
 from process.models import RunningProcess, Process
 from process.views import abort as api_abort
 from django.contrib.auth import authenticate, login, logout
@@ -59,20 +61,8 @@ def about(request):
     return render(request, "about.html")
 
 
-def contacts(request):
-    return render(request, "contacts.html")
-
-
-def img_analysis(request):
-    return render(request, "project/img_analysis.html")
-
-
-def r_plr(request):
-    return render(request, "project/r_plr.html")
-
-
-def hadoop(request):
-    return render(request, "project/hadoop.html")
+def download(request):
+    return render(request, "download.html")
 
 
 def api_doc(request):
@@ -81,6 +71,23 @@ def api_doc(request):
 
 def license(request):
     return render(request, "license.html")
+
+
+def run_process(request, p_id):
+    proc = Process.objects.get(pk=p_id)
+    ProcessForm = FormFactory(proc).build_form()
+
+    context = {
+        "form": ProcessForm,
+        "proc": proc
+    }
+
+    return render_to_response('run_process.html', context, context_instance=RequestContext(request))
+
+
+    #return render(request, "project/r_plr.html")
+
+
 
 
 #

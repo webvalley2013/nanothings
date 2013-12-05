@@ -18,14 +18,9 @@
 {% extends "index.html" %}
 {% load staticfiles %}
 {% load url from future %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Rhadius - Process Detail</title>
-</head>
-
-<body>
+{% block headtitle %}
+Rhadius - Process Detail
+{% endblock %}
 {% block intro-section-content %}
         <h1>Process properties</h1>
         <ul class="prop">
@@ -41,5 +36,3 @@
 
     {% block thumbnails %}{% endblock %}
 {% endblock %}
-</body>
-</html>

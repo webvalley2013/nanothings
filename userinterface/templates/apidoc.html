@@ -19,13 +19,7 @@
 {% load staticfiles %}
 {% load url from future %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Rhadius - API documentation</title>
-</head>
-
-<body>
+{% block headtitle %}Rhadius - API documentation{% endblock %}
 
 
 {% block extra-scripts %}
@@ -34,7 +28,6 @@
         $("li#api").addClass("active");
     </script>
 {% endblock %}
-
 
 
 {% block intro-section-content %}
@@ -264,5 +257,3 @@
     </p>
     {% block thumbnails %}{% endblock %}
 {% endblock %}
-</body>
-</html>

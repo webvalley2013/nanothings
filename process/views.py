@@ -51,6 +51,7 @@ def process_list(request):
     data = serializer.serialize(Process.objects.all(), modifiers=[mod])
     return data
 
+
 @ajax(require_POST=True)
 @csrf_exempt
 def run_process_3d(request, p_id):
@@ -288,6 +289,66 @@ def run_test_hadoop(request, p_id):
                    'success': False,
                    'message': 'input parameters were invalid'
                }, 400
+
+
+
+@ajax(require_POST=True)
+@csrf_exempt
+def run_test_image(request, p_id):
+    try:
+        proc = Process.objects.get(pk=p_id)
+    except Process.DoesNotExist:
+        return {'success': False,
+                'message': 'process with id {0} does not exists'.format(p_id)}, 400
+
+    if proc.type != '3d':
+        return {'success': False,
+                'message': 'process with id {0} is not a 3d analisys'.format(p_id)}, 400
+
+
+    # If the parameters are correct:
+    ProcessForm = FormFactory(proc).build_form()
+    form = ProcessForm(request.POST)
+    if form.is_valid():
+        parameters = form.save()
+        from .tasks import process_image
+
+    #Add task to broker code
+        try:
+            outdir = create_dir_name(DEFAULT_OUTPUT_PATH)
+
+            path = parameters["nucleus1"]
+            mask = parameters["mask_index"]
+
+            print path
+
+            task = process_image.delay(path, mask)
+
+        except Exception as e:
+             return {
+                 'success': False,
+                 'message': 'Internal server error ' + e.message
+             }, 500
+        else:
+            # Save running process to db
+            p = RunningProcess()
+            p.process_type = proc  # (3d, hadoop, R/PLR, ...)
+            p.task_id = task.id
+            p.started = datetime.datetime.now()
+            p.inputs = json.dumps(parameters)
+            p.save()  # Save the running process to the DB
+
+            # Return response to the client.
+            return {
+                'success': True,
+                'polling_url': '/process/status/' + str(p.pk)
+            }
+
+    else:
+        return {
+            'success': False,
+            'message': 'input parameters were invalid'
+        }, 400
 
 
 @ajax()

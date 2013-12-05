@@ -19,38 +19,25 @@
 {% load staticfiles %}
 {% load url from future %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Rhadius - Contacts</title>
-</head>
-
-<body>
+{% block headtitle %}Rhadius - Download{% endblock %}
 
 {% block extra-scripts %}
     <script>
         $("li.active").removeClass("active");
-        $("li#contacts").addClass("active");
+        $("li#download").addClass("active");
     </script>
 {% endblock %}
 
-
-
 {% block intro-section-content %}
-    <h2 id= title>
-        Contacts
-    </h2>
-    <h4 id= nome>Fondazione Bruno Kessler</h4>
-    <p id= txtContacts>
-        Via Sommarive, 18<br/>
-        Povo (Trento) Italy 38123<br/>
-        mobile:<br/>
-        +39 366 7554977<br/>
-        mail:<br/>
-        webvalley at fbk.eu<br/>
+<div class="hero-unit">
+    <h1>TRY it!</h1>
+    <p>Download the omero plugin, and try the demo process.</p>
+    <p>
+        <a class="btn btn-primary btn-large">
+          Download
+        </a>
     </p>
-
+</div>
     {% block thumbnails %}{% endblock %}
 {% endblock %}
-</body>
-</html>
+

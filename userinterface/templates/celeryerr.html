@@ -19,13 +19,8 @@
 {% load staticfiles %}
 {% load url from future %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Rhadius - Celery error</title>
-</head>
+{% block headtitle %}Rhadius - Celery error{% endblock %}
 
-<body>
 {% block intro-section-content %}
 
     <h1>Celery is not running!</h1>
@@ -35,5 +30,3 @@
     <a href="/ui/process_list/" class="btn btn-large">Back to process list</a>
     {% block thumbnails %}{% endblock %}
 {% endblock %}
-</body>
-</html>

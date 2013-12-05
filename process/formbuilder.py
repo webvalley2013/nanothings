@@ -40,12 +40,12 @@ class FormFactory(object):
     def __init__(self, process):
         self.process = process
 
-    def _get_field(self, type):
+    def _get_field(self, type, label):
         form_fields = {
-            'int': forms.IntegerField(required=False),
-            'string': forms.CharField(required=False),
+            'int': forms.IntegerField(required=False, label=label),
+            'string': forms.CharField(required=False, label=label),
             #'image': forms.ImageField(required=True),
-            'url_list': URLListField(required=True)
+            'url_list': URLListField(required=True, label=label)
         }
         return form_fields.get(type, form_fields['string'])
 
@@ -55,7 +55,7 @@ class FormFactory(object):
     def build_form(self):
         dct = {}
         for d in self.process.inputs:
-            dct[d['name']] = self._get_field(d['type'])
+            dct[d['name']] = self._get_field(d['type'],d['label'])
 
         dct['DIRNAME'] = str(int(time()*1000))
         return self._get_form_class(dct)

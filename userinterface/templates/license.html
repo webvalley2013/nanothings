@@ -18,15 +18,9 @@
 {% extends "index.html" %}
 {% load staticfiles %}
 {% load url from future %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Rhadius - License</title>
-</head>
-
-<body>
-
+{% block headtitle %}
+Rhadius - License
+{% endblock %}
 {% block extra-scripts %}
     <script>
         $("li.active").removeClass("active");
@@ -53,5 +47,3 @@
     </p>
     {% block thumbnails %}{% endblock %}
 {% endblock %}
-</body>
-</html>

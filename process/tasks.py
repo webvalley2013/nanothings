@@ -22,14 +22,6 @@ from .extralib.hadapi.hadapi import hadoopHandler
 from nanothings.settings import DEFAULT_HTTP_OUTPUT
 
 
-
-@task()
-def add(x, y):
-    import time
-    time.sleep(600)
-    return x + y
-
-
 @task()
 def process_int(url_list1, url_list2, url_list3):
     import time
@@ -38,23 +30,24 @@ def process_int(url_list1, url_list2, url_list3):
     return out
 
 
-@task()
-def minus(x, y):
-    import time
-    time.sleep(15)
-    return x - y
-
 
 @task()
-def run_3d_analisys(conditions, outdir, cond_lbl_list,slice_label, chan_lbl_list,mask_index, molecule_index,mask_channel, molecule_channel):
+def run_3d_analisys(conditions, outdir, cond_lbl_list, slice_label, chan_lbl_list, mask_index, molecule_index, mask_channel, molecule_channel):
     main2d.main_api(conditions, outdir, cond_lbl_list, slice_label, chan_lbl_list, mask_index, molecule_index,
                     mask_channel, molecule_channel,
-                    mask_otsu= True, mask_fillholes= True, molecule_otsu= False, molecule_fillholes= False, single_object_analysis = False)
+                    mask_otsu=True, mask_fillholes=True, molecule_otsu=False, molecule_fillholes=False,
+                    single_object_analysis=False)
 
     dir = str(Path(outdir).name)
     return DEFAULT_HTTP_OUTPUT + "&path=/" + dir
 
-# parameters["url_pathways"], parameters["url_data"], parameters["sel_pathways"], parameters["thr"]
+
+@task()
+def process_image(path, thr):
+    print "Here"
+    return True
+
+
 @task()
 def process_plr(url_pathways, url_data, sel_pathways, thr):
     # try:
@@ -79,9 +72,9 @@ def process_plr(url_pathways, url_data, sel_pathways, thr):
     return 'http://192.168.205.10/owncloud/public.php?service=files&t=480d93ee44956ac9e26efc1d3321449e&path=/' + dir
 
 
-@task()
-def process_hadoop(int1, int2, int3):
-    hd = hadoopHandler("pc05","userhadoop","user")
-    hd.pheno_run("~/input12.txt","~/output12")
-
-    return "OK"
+#@task()
+#def process_hadoop(int1, int2, int3):
+#    hd = hadoopHandler("pc05","userhadoop","user")
+#    hd.pheno_run("~/input12.txt","~/output12")
+#
+#    return "OK"

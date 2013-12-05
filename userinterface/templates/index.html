@@ -20,7 +20,7 @@
 
 <html lang="en">
 <head>
-    <title>Rhadius - Home</title>
+    <title>{% block headtitle %}Rhadius - Home {% endblock %}</title>
 
     {% block meta %}
         <meta charset="utf-8">
@@ -59,16 +59,17 @@
                         <li class="active"><a href="/">Home</a></li>
                         <li id="about"><a href="/about/">About</a></li>
 
-                        <li class="dropdown" id=projects>
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Projects<strong
-                                    class="caret"></strong></a>
+                        <li class="dropdown" id="demo">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Demo process
+                                <strong class="caret"></strong></a>
                             <ul class="dropdown-menu">
-                                <li id=img_analysis><a href="/img_analysis/">Image analysis</a></li>
-                                <li id=r_plr><a href="/r_plr/">R/PLR Networks</a></li>
-                                <li id=networks><a href="/hadoop/">Cloud Computing Hadoop</a></li>
-                                <li id=omero><a href="/omero/">Omero</a></li>
+                                <li id="plr"><a href="/run/plr/">PL/R network</a></li>
+                                <li id="imganlisys"><a href="/run/omero/">Image analisys</a></li>
                             </ul>
                         </li>
+
+                        <li id="download"><a href="/download/">Download</a></li>
+
                         <li id=api><a href="/api_documentation">API documentation</a></li>
                         <li id=license><a href="/license">License</a></li>
                         <!--<li id="contacts"><a href="#">Contacts</a></li>-->

@@ -14,6 +14,7 @@
 {#    along with nanothings.  If not, see <http://www.gnu.org/licenses/>.#}
 {% extends "index.html" %}
 {% load staticfiles %}
+{% load static %}
 {% load url from future %}
 
 <!DOCTYPE html>
@@ -34,15 +35,31 @@
 
 
 {% block intro-section-content %}
-    <h2>
-        Hadoop
+    <h2 id= titleR>
+         Run demo process
     </h2>
-    <p>
-        This is a template for a simple marketing or informational website.
-        It includes a large callout called the hero unit and three supporting
-        pieces of content. Use it as a starting point to create something more unique.
-    </p>
-    
+    <h4><span class="badge badge-success">{{ proc.type|upper }}</span> {{ proc.description|lower }}</h4>
+    <div>
+        {% if proc.type == "plr" %}
+            <div style="width: 400px; float: right;"><img src="{% static 'userinterface/img/RNA_network.png' %}"/></div>
+        {% endif %}
+        <form action={% url proc.code proc.pk %} method="post">
+
+        {# Include the hidden fields #}
+            {{ form.as_p }}
+{#        {% for hidden in form.hidden_fields %}#}
+{#        {{ hidden }}#}
+{#        {% endfor %}#}
+        {# Include the visible fields #}
+{#        {% for field in form.visible_fields %}#}
+{#            <div class="fieldWrapper">#}
+{#                {{ field.errors }}#}
+{#                {{ field.label_tag }} {{ field }}#}
+{#            </div>#}
+{#        {% endfor %}#}
+        <p><input type="submit" class="btn btn-primary" value="Run analysis" /></p>
+</form>
+    </div>
     {% block thumbnails %}{% endblock %}
 {% endblock %}
 </body>
