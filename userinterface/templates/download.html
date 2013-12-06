@@ -19,7 +19,7 @@
 {% load staticfiles %}
 {% load url from future %}
 
-{% block headtitle %}Rhadius - Download{% endblock %}
+{% block headtitle %}Rhadius - OME Plugin Download{% endblock %}
 
 {% block extra-scripts %}
     <script>
@@ -30,13 +30,61 @@
 
 {% block intro-section-content %}
 <div class="hero-unit">
+    <img alt="OME Logo" src="{% static 'userinterface/img/logo_ome.png' %}" width="200px" style="float:right"/>
     <h1>TRY it!</h1>
-    <p>Download the omero plugin, and try the demo process.</p>
-    <p>
-        <a class="btn btn-primary btn-large">
-          Download
-        </a>
+    <p>Download the <strong><a href="http://www.openmicroscopy.org/site/products/omero" target="_blank">Omero</a></strong>
+        Plugin at the bottom of this page, and try the Rhadius demo server.
     </p>
+    <hr/>
+
+    <h2>Requirements</h2>
+    <p>Rhadius plugin requires the following libraries to be installed on your OMERO server installation:</p>
+    <ul>
+        <li>numpy</li>
+        <li>requests</li>
+        <li>PIL</li>
+        <li>time</li>
+    </ul>
+
+    <hr/>
+
+    <h2>Install</h2>
+    <p>Upload the plugin using <strong>
+        <a href="http://www.openmicroscopy.org/site/support/omero4/users/clients-overview.html#omero-insight">OMERO.insight</a>
+        </strong> or copy the plugin into omero server [lib/scripts] folder.
+    </p>
+    <p><img alt="Install Steps Omero.insight" src="{% static 'userinterface/img/plugin-install.png' %}"/></p>
+
+    <hr/>
+
+    <h2>Setup</h2>
+    <p><img alt="Plugins setup interface" src="{% static 'userinterface/img/plugin-setup.png' %}" style="float:right"/></p>
+    <p>Load the plugin either from OMERO.insight or OMERO.web and setup the parameters (leave default values to try
+       our test server):</p>
+
+    <p><strong>Folder Name: </strong><br/>For each remote analysis available on Rhadius a script will appear inside this folder.</p>
+    <p><strong>Rhadius Server URL: </strong><br/>OMERO Server must be able ton reach Rhadius Server trough HTTP.</p>
+    <p><strong>WebDAV Settings: </strong><br/>To pass images from OMERO to Rhadius a WebDAV server is used. Images are uploaded
+        from Omero via username/password and downloaded by Rhadius via direct link. You can easily achieve this setup using
+        <strong><a href="http://owncloud.org/">OwnCloud</a></strong>.
+    </p>
+    <p><strong>OMERO Server Settings: </strong><br/>The automagic creation of new processes inside OMERO Server script directory
+        requires Administrative username and password of your OMERO instance passed to the script.
+    </p>
+    <p>When everything is set up, run the script.</p>
+
+    <hr/>
+
+    <h2>Run!</h2>
+    <p>Reload the script list and you should now find a new folder with all the remote analysis ready to be run. Have fun!</p>
+    <p><img alt="Run remote analysis" src="{% static 'userinterface/img/plugin-run.png' %}"/></p>
+
+    <hr/>
+
+    <p><a class="btn btn-primary btn-large" href="{% static 'download/RhadiusAccess.py' %}">Download</a></p>
+
+
+
 </div>
     {% block thumbnails %}{% endblock %}
 {% endblock %}
