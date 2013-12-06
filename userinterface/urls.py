@@ -24,7 +24,7 @@ urlpatterns = patterns('userinterface.views',
     url(r'api_documentation/$', 'api_doc'),
     url(r'license/$', 'license'),
 
-    url(r'run/(\d+)/$', 'run_process'),
+    url(r'run/(\d+)/$', 'run_process', name='run_process_gui'),
 
     #ADMIN PROCESS AREA
     url(r'uiprocess_list/$', "list_of_processes"),
