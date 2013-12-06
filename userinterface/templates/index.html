@@ -63,8 +63,9 @@
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">Demo process
                                 <strong class="caret"></strong></a>
                             <ul class="dropdown-menu">
-                                <li id="plr"><a href="/run/plr/">PL/R network</a></li>
-                                <li id="imganlisys"><a href="/run/omero/">Image analisys</a></li>
+{#                                <li id="plr"><a href="{% url 'run_process_gui' 2 %}">PL/R network</a></li>#}
+                                <li id="plr"><a href="{% url 'run_process_gui' 2 %}">Demo integer number</a></li>
+                                <li id="imganlisys"><a href="{% url 'run_process_gui' 6 %}">Demo image</a></li>
                             </ul>
                         </li>
 
@@ -74,7 +75,7 @@
                         <li id=license><a href="/license">License</a></li>
                         <!--<li id="contacts"><a href="#">Contacts</a></li>-->
                         {% if user.is_superuser %}
-                            <li><a href="/process_list">Process Management</a></li>
+                            <li><a href="uiprocess_list/">Process Management</a></li>
                         {% endif %}
                     </ul>
 
